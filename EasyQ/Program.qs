@@ -19,10 +19,7 @@
         DemonstrateRandomNumbers();
         
         // Demonstrate database search
-        DemonstrateQuantumSearch();
-        
-        // Demonstrate string search
-        DemonstrateStringSearch();
+        DemonstrateSearch();
     }
     
     /// # Summary
@@ -49,67 +46,62 @@
     
     /// # Summary
     /// Demonstrates the quantum database search capabilities
-    operation DemonstrateQuantumSearch() : Unit {
-        Message("\n2. Quantum Database Search");
-        Message("-------------------------");
+    operation DemonstrateSearch() : Unit {
+        Message("\n4. Quantum Search");
+        Message("-----------------------------------");
         
-        // Define database parameters
-        let databaseSize = 8;
-        let targetIndex = 3;
-        
-        // Perform simple search
-        Message($"Searching in a database of size {databaseSize} for item at index {targetIndex}");
-        let result = QuantumDatabaseSearch(databaseSize, targetIndex);
-        Message($"Quantum search found item at index: {result}");
-        
-        // Demonstrate multiple item search
-        let markedItems = [1, 6];
-        Message($"\nSearching for one of multiple items at indices {markedItems}");
-        let multiResult = QuantumMultiSearch(databaseSize, markedItems);
-        Message($"Quantum search found item at index: {multiResult}");
-        
-        // Check if the result is one of our marked items
-        let found = ContainsInt(multiResult, markedItems);
-        Message($"Is the result ({multiResult}) one of our marked items? {found}");
-    }
-    
-    /// # Summary
-    /// Demonstrates the quantum string search capabilities
-    operation DemonstrateStringSearch() : Unit {
-        Message("\n3. Quantum String Search");
-        Message("---------------------");
-        
-        // Create a sample dictionary of words
-        let wordList = [
+        // Sample database - in a real application, this could be much larger
+        let sampleData = [
             "quantum", "computer", "algorithm", "superposition", 
             "entanglement", "qubit", "interference", "oracle",
             "register", "classical", "simulation", "speedup"
         ];
         
-        // The database size needs to be a power of 2
-        let databaseSize = 16; // Next power of 2 above dictionary size
+        Message("Creating quantum index for sample data...");
+        let index = CreateIndex(sampleData);
         
-        // Demonstrate exact word lookup
-        let wordToFind = "qubit";
-        Message($"Looking for word: '{wordToFind}'");
+        // Exact search
+        let searchKey = "qubit";
+        Message($"Searching for '{searchKey}'...");
         
-        let (found, foundWord) = LookupWord(databaseSize, wordToFind, wordList);
+        let foundIndex = Search(index, searchKey);
         
-        if found {
-            Message($"Successfully found: '{foundWord}'");
+        if foundIndex >= 0 and foundIndex < Length(sampleData) {
+            Message($"Found '{searchKey}' at index {foundIndex}: {sampleData[foundIndex]}");
         } else {
-            Message("Word not found in the database.");
+            Message($"'{searchKey}' not found in the database.");
         }
         
-        // Demonstrate finding similar words
-        let queryWord = "quantum";
+        // Similar items search
+        let queryKey = "quantum";
         let maxResults = 3;
-        Message($"\nFinding {maxResults} words similar to '{queryWord}':");
+        Message($"\nFinding {maxResults} items similar to '{queryKey}':");
         
-        let similarWords = FindSimilarWords(databaseSize, queryWord, wordList, maxResults);
+        let similarIndices = FindSimilar(index, queryKey, maxResults);
         
-        for word in similarWords {
-            Message($"Similar word: '{word}'");
+        for idx in similarIndices {
+            if idx >= 0 and idx < Length(sampleData) {
+                Message($"Similar item: '{sampleData[idx]}'");
+            }
+        }
+        
+        // Key-value example with dictionary
+        Message("\nKey-value search example:");
+        
+        let keys = ["user1", "user2", "user3", "user4"];
+        let values = ["Alice", "Bob", "Charlie", "Dave"];
+        
+        let userIndex = CreateKeyValueIndex(keys, values);
+        
+        let userKey = "user3";
+        Message($"Looking up '{userKey}'...");
+        
+        let userIdx = Search(userIndex, userKey);
+        
+        if userIdx >= 0 and userIdx < Length(values) {
+            Message($"Found '{userKey}': {values[userIdx]}");
+        } else {
+            Message($"User not found.");
         }
     }
     
