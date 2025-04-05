@@ -261,17 +261,6 @@ namespace EasyQ.Algorithms
                 throw new InvalidOperationException("No items match the predicate in the search space");
             }
             
-            // For better results, we'll use different iteration strategies
-            // and try multiple targets
-            var iterationStrategies = new List<Func<double, int>>
-            {
-                angle => (int)Math.Floor(Math.PI / (4.0 * angle) - 0.5),      // Standard optimal iterations
-                angle => (int)Math.Floor(Math.PI / (4.0 * angle)),            // Slightly more iterations
-                angle => (int)Math.Floor(Math.PI / (4.0 * angle) - 1),        // Slightly fewer iterations
-                angle => 1,                                                   // Just one iteration (works for small search spaces)
-                angle => (int)Math.Floor(Math.PI / (4.0 * angle) / 2)         // Half the standard iterations
-            };
-            
             // Find all targets that satisfy the predicate (up to 5)
             var targets = new List<int>();
             for (int i = 0; i < Math.Min(searchSpace, 1000); i++)
@@ -288,36 +277,69 @@ namespace EasyQ.Algorithms
                 throw new InvalidOperationException("No items match the predicate in the sampling range");
             }
             
-            // Try with different targets and iteration strategies
+            // Try amplitude amplification with different parameters
+            return await AmplitudeAmplificationSearch(numQubits, searchSpace, collectionSize, targets, predicate, maxAttempts);
+        }
+        
+        /// <summary>
+        /// Implements quantum amplitude amplification for more robust search results.
+        /// </summary>
+        private async Task<long> AmplitudeAmplificationSearch(
+            int numQubits, 
+            long searchSpace, 
+            long collectionSize,
+            List<int> knownTargets, 
+            Func<int, bool> predicate,
+            int maxAttempts)
+        {
+            // Strategies for amplitude amplification
+            // Each strategy is a tuple of (base iterations, multiplier, offset)
+            var amplificationStrategies = new List<(double baseFactor, double multiplier, int offset)>
+            {
+                (0.25, 1.0, 0),      // Standard Grover (π/4 * sqrt(N))
+                (0.25, 0.5, 0),      // Half iterations
+                (0.25, 1.5, 0),      // 50% more iterations
+                (0.25, 1.0, -1),     // Standard minus 1
+                (0.25, 1.0, 1),      // Standard plus 1
+                (0.2, 1.0, 0),       // Slightly fewer iterations (π/5 * sqrt(N))
+                (0.3, 1.0, 0),       // Slightly more iterations (π/3.33 * sqrt(N))
+                (0.125, 1.0, 0),     // 1/8 of standard (π/8 * sqrt(N))
+                (1.0, 1.0, 0)        // Fixed single iteration
+            };
+            
             Random rng = new Random();
-            int totalAttempts = maxAttempts * iterationStrategies.Count;
+            int totalStrategies = amplificationStrategies.Count;
+            int totalTargets = knownTargets.Count;
+            int totalAttempts = maxAttempts * totalStrategies;
+            
+            Console.WriteLine($"Using amplitude amplification with {totalAttempts} attempts across {totalStrategies} strategies");
             
             for (int attempt = 0; attempt < totalAttempts; attempt++)
             {
-                // Select a target and iteration strategy
-                int targetIndex = rng.Next(targets.Count);
-                int target = targets[targetIndex];
+                // Select a target and amplification strategy
+                int targetIndex = attempt % totalTargets;
+                int strategyIndex = (attempt / totalTargets) % totalStrategies;
                 
-                int strategyIndex = (attempt / maxAttempts) % iterationStrategies.Count;
-                var iterationStrategy = iterationStrategies[strategyIndex];
+                int target = knownTargets[targetIndex];
+                var strategy = amplificationStrategies[strategyIndex];
                 
                 try
                 {
-                    Console.WriteLine($"Quantum search attempt {attempt+1}/{totalAttempts}: Target '{target}', Strategy {strategyIndex+1}");
+                    // Calculate iterations using the amplification strategy
+                    double sqrtN = Math.Sqrt(searchSpace);
+                    int iterations = (int)Math.Floor(Math.PI * strategy.baseFactor * sqrtN * strategy.multiplier) + strategy.offset;
+                    iterations = Math.Max(1, iterations); // At least 1 iteration
                     
-                    // Calculate iterations based on the selected strategy
-                    double angle = Math.Asin(Math.Sqrt(matchCount / (double)searchSpace));
-                    int iterations = Math.Max(1, iterationStrategy(angle));
-                    
-                    Console.WriteLine($"Using {iterations} iterations for search space of {searchSpace} with {matchCount} matches");
+                    Console.WriteLine($"Amplitude amplification attempt {attempt+1}/{totalAttempts}: " +
+                                     $"Target={target}, Strategy={strategyIndex+1}, Iterations={iterations}");
                     
                     // Create oracle for the target item
                     var oracle = await CreateOracleForItem.Run(_simulator, numQubits, target);
                     
-                    // Run Grover's search algorithm
+                    // Run Grover's search algorithm with this amplification strategy
                     long result = await GroverSearch.Run(_simulator, numQubits, oracle, iterations);
                     
-                    Console.WriteLine($"Quantum search returned index {result}");
+                    Console.WriteLine($"Search returned index {result}");
                     
                     // Verify the result matches our predicate
                     if (result < collectionSize && predicate((int)result))
@@ -332,12 +354,13 @@ namespace EasyQ.Algorithms
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine($"Quantum attempt {attempt+1} failed: {ex.Message}");
-                    // Try again with different parameters
+                    Console.WriteLine($"Amplitude amplification attempt {attempt+1} failed: {ex.Message}");
+                    // Continue to next attempt
                 }
             }
             
-            throw new InvalidOperationException($"Failed to find a matching item after {totalAttempts} attempts");
+            // If we've tried all strategies and targets without success, throw exception
+            throw new InvalidOperationException($"Amplitude amplification failed after {totalAttempts} attempts");
         }
         
         /// <summary>
