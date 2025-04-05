@@ -29,7 +29,7 @@ namespace EasyQ.Algorithms
         /// <param name="targetItem">The target item to find (must be less than searchSpace)</param>
         /// <param name="iterations">Optional: Number of Grover iterations to perform. If not specified, uses the optimal number.</param>
         /// <returns>The index of the found item</returns>
-        public async Task<int> SearchAsync(int searchSpace, int targetItem, int? iterations = null)
+        public async Task<long> SearchAsync(long searchSpace, long targetItem, long? iterations = null)
         {
             ValidateInputs(searchSpace, targetItem);
             
@@ -37,7 +37,7 @@ namespace EasyQ.Algorithms
             int numQubits = (int)Math.Ceiling(Math.Log2(searchSpace));
             
             // Calculate optimal number of iterations if not specified
-            int iterationsToUse = iterations ?? CalculateOptimalIterations(searchSpace, 1);
+            long iterationsToUse = iterations ?? GetOptimalIterationCount(searchSpace, 1);
             
             // Create oracle for the target item
             var oracle = CreateOracleForItem.Run(_simulator, numQubits, targetItem).Result;
@@ -56,7 +56,7 @@ namespace EasyQ.Algorithms
         /// <param name="estimatedMatches">Estimated number of items that match the predicate</param>
         /// <param name="maxAttempts">Maximum number of search attempts</param>
         /// <returns>An item that matches the predicate</returns>
-        public async Task<int> SearchWithPredicateAsync(int searchSpace, Func<int, bool> predicate, int estimatedMatches = 1, int maxAttempts = 10)
+        public async Task<long> SearchWithPredicateAsync(long searchSpace, Func<long, bool> predicate, long estimatedMatches = 1, int maxAttempts = 10)
         {
             ValidateInputs(searchSpace, 0);
             
@@ -64,14 +64,14 @@ namespace EasyQ.Algorithms
             int numQubits = (int)Math.Ceiling(Math.Log2(searchSpace));
             
             // Calculate optimal number of iterations
-            int iterations = CalculateOptimalIterations(searchSpace, estimatedMatches);
+            long iterations = GetOptimalIterationCount(searchSpace, estimatedMatches);
             
             // Make multiple attempts since Grover's algorithm is probabilistic
             for (int attempt = 0; attempt < maxAttempts; attempt++)
             {
                 // For each attempt, find a random target that satisfies the predicate
-                int target = -1;
-                for (int i = 0; i < searchSpace; i++)
+                long target = -1;
+                for (long i = 0; i < searchSpace; i++)
                 {
                     if (predicate(i))
                     {
@@ -104,7 +104,7 @@ namespace EasyQ.Algorithms
         /// <summary>
         /// Calculates the optimal number of Grover iterations for a given problem size.
         /// </summary>
-        private int CalculateOptimalIterations(int searchSpace, int estimatedMatches)
+        private long GetOptimalIterationCount(long searchSpace, long estimatedMatches)
         {
             return CalculateOptimalIterations.Run(_simulator, searchSpace, estimatedMatches).Result;
         }
@@ -112,7 +112,7 @@ namespace EasyQ.Algorithms
         /// <summary>
         /// Validates the inputs for the search algorithm.
         /// </summary>
-        private void ValidateInputs(int searchSpace, int targetItem)
+        private void ValidateInputs(long searchSpace, long targetItem)
         {
             if (searchSpace <= 0)
             {
@@ -133,7 +133,7 @@ namespace EasyQ.Algorithms
         /// <summary>
         /// Checks if a number is a power of 2.
         /// </summary>
-        private bool IsPowerOfTwo(int x)
+        private bool IsPowerOfTwo(long x)
         {
             return x > 0 && (x & (x - 1)) == 0;
         }
