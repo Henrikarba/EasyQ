@@ -34,18 +34,20 @@ namespace EasyQTests
 
         public async Task RunAsync()
         {
-            // Run all search tests without asking for user input
-            await RunSingleItemSearchTests();
+            // Run all search tests
+            await RunSimpleSearchTests();
             Console.WriteLine();
-            await RunMultipleMatchesSearchTests();
+            await RunPredicateSearchTests();
+            Console.WriteLine();
+            await RunOptionsExamples();
         }
 
-        private async Task RunSingleItemSearchTests()
+        private async Task RunSimpleSearchTests()
         {
-            Console.WriteLine("\nSingle Item Search Tests");
-            Console.WriteLine("------------------------");
+            Console.WriteLine("\nSimple Search Tests");
+            Console.WriteLine("------------------");
             
-            // Create a mock database of names (16 names - power of 2 for quantum search)
+            // Create a mock database of names
             var nameDatabase = new List<string>
             {
                 "Alice", "Bob", "Charlie", "David",
@@ -54,21 +56,27 @@ namespace EasyQTests
                 "Mia", "Noah", "Olivia", "Peter"
             };
             
-            Console.WriteLine("Mock Database Contents:");
-            for (int i = 0; i < nameDatabase.Count; i++)
+            Console.WriteLine($"Database size: {nameDatabase.Count} items");
+            
+            // Create options with logging enabled for test visibility
+            var options = new QuantumSearchOptions
             {
-                Console.WriteLine($"[{i}] {nameDatabase[i]}");
+                EnableLogging = true,
+                MaxAttempts = 100 // Increase max attempts to improve success rate
+            };
+            
+            using var searcher = new QuantumSearch(options);
+            
+            // Test 1: Search for a specific name
+            Console.WriteLine("\n1. Searching for 'Grace'");
+            
+            var results = await searcher.Search(nameDatabase, "Grace");
+            
+            Console.WriteLine($"Found {results.Count} results:");
+            foreach (var result in results)
+            {
+                Console.WriteLine($"- '{result.Item}' at index {result.Index}");
             }
-            
-            using var searcher = new QuantumSearch();
-            
-            // Test 1: Search for a specific name by value
-            Console.WriteLine("\n1. Searching for a specific name");
-            string targetName = "Grace";
-            Console.WriteLine($"Target: '{targetName}'");
-
-            var result = await searcher.Search(nameDatabase, targetName);
-            Console.WriteLine($"Found '{result.Item}' at index {result.Index}");
             
             // Test 2: Search in a non-power-of-2 database
             Console.WriteLine("\n2. Searching in a non-power-of-2 database");
@@ -81,19 +89,40 @@ namespace EasyQTests
             
             Console.WriteLine($"Database size: {nonPowerOfTwoDatabase.Count} (not a power of 2)");
             
-            targetName = "Mia";
-            Console.WriteLine($"Target: '{targetName}'");
-
-            result = await searcher.Search(nonPowerOfTwoDatabase, targetName);
-            Console.WriteLine($"Found '{result.Item}' at index {result.Index}");
+            results = await searcher.Search(nonPowerOfTwoDatabase, "Mia");
+            
+            Console.WriteLine($"Found {results.Count} results:");
+            foreach (var result in results)
+            {
+                Console.WriteLine($"- '{result.Item}' at index {result.Index}");
+            }
+            
+            // Test 3: Search for a name that appears multiple times
+            Console.WriteLine("\n3. Searching in a database with duplicates");
+            
+            var duplicateDatabase = new List<string>
+            {
+                "Alice", "Bob", "Charlie", "Alice",
+                "Emma", "Alice", "Grace", "Henry"
+            };
+            
+            Console.WriteLine($"Database size: {duplicateDatabase.Count} items");
+            
+            results = await searcher.Search(duplicateDatabase, "Alice");
+            
+            Console.WriteLine($"Found {results.Count} occurrences of 'Alice':");
+            foreach (var result in results)
+            {
+                Console.WriteLine($"- At index {result.Index}");
+            }
         }
 
-        private async Task RunMultipleMatchesSearchTests()
+        private async Task RunPredicateSearchTests()
         {
-            Console.WriteLine("\nMultiple Matches Search Tests");
-            Console.WriteLine("----------------------------");
+            Console.WriteLine("\nPredicate Search Tests");
+            Console.WriteLine("---------------------");
             
-            // Create a mock database with duplicate entries
+            // Create a mock database with various entries
             var productDatabase = new List<string>
             {
                 "Laptop", "Phone", "Camera", "Headphones", 
@@ -101,61 +130,45 @@ namespace EasyQTests
                 "Drone", "Phone", "Laptop", "Speakers"
             };
             
-            Console.WriteLine("Product Database Contents:");
-            for (int i = 0; i < productDatabase.Count; i++)
+            Console.WriteLine($"Database size: {productDatabase.Count} items");
+            
+            var options = new QuantumSearchOptions
             {
-                Console.WriteLine($"[{i}] {productDatabase[i]}");
-            }
+                EnableLogging = true,
+                SamplingStrategy = SamplingStrategy.FullScan
+            };
             
-            using var searcher = new QuantumSearch();
+            using var searcher = new QuantumSearch(options);
             
-            // Test 1: Find all occurrences of "Camera"
-            Console.WriteLine("\n1. Finding all occurrences of 'Camera'");
-            string targetProduct = "Camera";
-            
-            Console.WriteLine($"Target: '{targetProduct}'");
-            var results = await searcher.SearchAll(productDatabase, targetProduct);
-            
-            Console.WriteLine($"Found {results.Count} occurrences of '{targetProduct}':");
-            
-            foreach (var match in results)
-            {
-                Console.WriteLine($" - Found at index {match.Index}");
-            }
-            
-            // Test 2: Find all products with length <= 5
-            Console.WriteLine("\n2. Finding all products with length <= 5");
-            Console.WriteLine("Target: Products with name length <= 5");
+            // Test 1: Find all products with length <= 5
+            Console.WriteLine("\n1. Finding all products with name length <= 5");
             
             Func<string, bool> shortNamePredicate = product => product.Length <= 5;
-            results = await searcher.SearchAllWhere(productDatabase, shortNamePredicate);
+            var results = await searcher.Search(productDatabase, shortNamePredicate);
             
             Console.WriteLine($"Found {results.Count} products with short names:");
-            
             foreach (var match in results)
             {
-                Console.WriteLine($" - '{match.Item}' (length: {match.Item.Length}) at index {match.Index}");
+                Console.WriteLine($"- '{match.Item}' (length: {match.Item.Length}) at index {match.Index}");
             }
             
-            // Test 3: Find all items that start with specific letters
-            Console.WriteLine("\n3. Finding all products that start with 'P' or 'S'");
-            Console.WriteLine("Target: Products starting with 'P' or 'S'");
+            // Test 2: Find all items that start with specific letters
+            Console.WriteLine("\n2. Finding all products that start with 'P' or 'S'");
             
             Func<string, bool> startsWithPorS = product => 
                 product.StartsWith("P", StringComparison.OrdinalIgnoreCase) || 
                 product.StartsWith("S", StringComparison.OrdinalIgnoreCase);
             
-            results = await searcher.SearchAllWhere(productDatabase, startsWithPorS);
+            results = await searcher.Search(productDatabase, startsWithPorS);
             
             Console.WriteLine($"Found {results.Count} matching products:");
-            
             foreach (var match in results)
             {
-                Console.WriteLine($" - '{match.Item}' at index {match.Index}");
+                Console.WriteLine($"- '{match.Item}' at index {match.Index}");
             }
             
-            // Test 4: Find all people with the same age
-            Console.WriteLine("\n4. Finding all people with the same age");
+            // Test 3: Find all people with the same age
+            Console.WriteLine("\n3. Finding all people with age 30");
             
             var people = new List<Person>
             {
@@ -167,22 +180,145 @@ namespace EasyQTests
                 new Person { Id = 6, Name = "Frank", Age = 25 }
             };
             
-            Console.WriteLine("People in database:");
-            foreach (var person in people)
-            {
-                Console.WriteLine($" - ID: {person.Id}, Name: {person.Name}, Age: {person.Age}");
-            }
+            Console.WriteLine($"Database size: {people.Count} people");
             
-            Console.WriteLine("Target: People age 30");
-            
-            var peopleResults = await searcher.SearchAllWhere(people, p => p.Age == 30);
+            // For this test, we know the exact number of matches (3 people with age 30)
+            var peopleResults = await searcher.Search(people, p => p.Age == 30, knownMatchCount: 3);
             
             Console.WriteLine($"Found {peopleResults.Count} people who are 30 years old:");
-            
             foreach (var match in peopleResults)
             {
-                Console.WriteLine($" - ID: {match.Item.Id}, Name: {match.Item.Name} at index {match.Index}");
+                Console.WriteLine($"- ID: {match.Item.Id}, Name: {match.Item.Name} at index {match.Index}");
             }
+        }
+        
+        private async Task RunOptionsExamples()
+        {
+            Console.WriteLine("\nSearch Options Examples");
+            Console.WriteLine("=====================");
+            
+            // Create a database with words (easier to understand than numbers)
+            var fruitDatabase = new List<string>
+            {
+                "apple", "banana", "cherry", "date", "elderberry",
+                "fig", "grape", "honeydew", "imbe", "jackfruit",
+                "kiwi", "lemon", "mango", "nectarine", "orange",
+                "peach", "quince", "raspberry", "strawberry", "tangerine",
+                "ugli", "vanilla", "watermelon", "xigua", "yuzu",
+                "zucchini", "apricot", "blackberry", "coconut", "dragonfruit"
+            };
+            
+            Console.WriteLine($"Database contains {fruitDatabase.Count} fruit names");
+            
+            // Example 1: Default options (simplest case)
+            Console.WriteLine("\nExample 1: Using default options");
+            
+            using (var searcher = new QuantumSearch())
+            {
+                Console.WriteLine("Searching for fruits starting with 'a'...");
+                
+                var results = await searcher.Search(fruitDatabase, s => s.StartsWith("a"));
+                
+                Console.WriteLine($"Found {results.Count} results:");
+                foreach (var result in results)
+                {
+                    Console.WriteLine($"- {result.Item}");
+                }
+            }
+            
+            // Example 2: Enable logging to see what's happening
+            Console.WriteLine("\nExample 2: Enable logging");
+            
+            var loggingOptions = new QuantumSearchOptions
+            {
+                EnableLogging = true
+            };
+            
+            using (var searcher = new QuantumSearch(loggingOptions))
+            {
+                Console.WriteLine("Searching for fruits containing 'berry'...");
+                
+                var results = await searcher.Search(fruitDatabase, s => s.Contains("berry"));
+                
+                Console.WriteLine($"Found {results.Count} results");
+            }
+            
+            // Example 3: Using a specific iteration strategy
+            Console.WriteLine("\nExample 3: Using different iteration strategies");
+            
+            Console.WriteLine("\n3.1: Using SingleIteration strategy (fastest but less accurate)");
+            var fastOptions = new QuantumSearchOptions
+            {
+                EnableLogging = true,
+                IterationStrategy = IterationStrategy.SingleIteration
+            };
+            
+            using (var searcher = new QuantumSearch(fastOptions))
+            {
+                var results = await searcher.Search(fruitDatabase, s => s.Length > 9);
+                Console.WriteLine($"Found {results.Count} fruits with names longer than 9 characters");
+            }
+            
+            Console.WriteLine("\n3.2: Using Aggressive strategy (more iterations, higher accuracy)");
+            var accurateOptions = new QuantumSearchOptions
+            {
+                EnableLogging = true,
+                IterationStrategy = IterationStrategy.Aggressive
+            };
+            
+            using (var searcher = new QuantumSearch(accurateOptions))
+            {
+                var results = await searcher.Search(fruitDatabase, s => s.Length > 9);
+                Console.WriteLine($"Found {results.Count} fruits with names longer than 9 characters");
+            }
+            
+            // Example 4: Using different sampling strategies
+            Console.WriteLine("\nExample 4: Using different sampling strategies");
+            
+            Console.WriteLine("\n4.1: Using FullScan strategy (exact count but slower)");
+            var fullScanOptions = new QuantumSearchOptions
+            {
+                EnableLogging = true,
+                SamplingStrategy = SamplingStrategy.FullScan
+            };
+            
+            using (var searcher = new QuantumSearch(fullScanOptions))
+            {
+                var results = await searcher.Search(fruitDatabase, s => s.Contains("e"));
+                Console.WriteLine($"Found {results.Count} fruits containing the letter 'e'");
+            }
+            
+            Console.WriteLine("\n4.2: Using Sampling strategy (estimated count but faster)");
+            var samplingOptions = new QuantumSearchOptions
+            {
+                EnableLogging = true,
+                SamplingStrategy = SamplingStrategy.Sampling,
+                SampleSize = 10  // Only check 10 random items to estimate total
+            };
+            
+            using (var searcher = new QuantumSearch(samplingOptions))
+            {
+                var results = await searcher.Search(fruitDatabase, s => s.Contains("e"));
+                Console.WriteLine($"Found {results.Count} fruits containing the letter 'e'");
+            }
+            
+            // Example 5: When you know exactly how many matches exist
+            Console.WriteLine("\nExample 5: When you know exactly how many matches exist");
+            
+            var knownCountOptions = new QuantumSearchOptions
+            {
+                EnableLogging = true,
+                SamplingStrategy = SamplingStrategy.UserProvided,
+                SampleSize = 3  // We know there are exactly 3 fruits starting with 'p'
+            };
+            
+            using (var searcher = new QuantumSearch(knownCountOptions))
+            {
+                var results = await searcher.Search(fruitDatabase, s => s.StartsWith("p"));
+                Console.WriteLine($"Found {results.Count} fruits starting with 'p'");
+            }
+            
+            Console.WriteLine("\nOptions Examples Completed");
         }
     }
 }
