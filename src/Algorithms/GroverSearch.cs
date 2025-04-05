@@ -164,7 +164,7 @@ namespace EasyQ.Algorithms
         /// <returns>A list of tuples containing the found items and their indices.</returns>
         public Task<List<(T Item, int Index)>> Search<T>(IList<T> collection, T item, QuantumSearchOptions? options = null)
         {
-            if (collection == null) throw new ArgumentNullException(nameof(collection));
+            ArgumentNullException.ThrowIfNull(collection);
             if (collection.Count == 0) throw new ArgumentException("Collection cannot be empty", nameof(collection));
 
             // Create a predicate that checks for exact match with the item
