@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.Quantum.Simulation.Core;
 using Microsoft.Quantum.Simulation.Simulators;
@@ -7,64 +8,149 @@ using EasyQ.Quantum.Algorithms;
 namespace EasyQ.Algorithms
 {
     /// <summary>
-    /// Provides a bridge between C# and the Q# implementation of Grover's search algorithm.
-    /// Allows regular developers to use quantum search without understanding quantum operations.
+    /// Provides a simple API for quantum search operations, hiding all quantum computing complexity.
+    /// Designed for regular developers with no quantum computing knowledge.
     /// </summary>
-    public class GroverSearchBridge
+    public class QuantumSearch : IDisposable
     {
         private readonly QuantumSimulator _simulator;
+        private bool _disposed = false;
         
         /// <summary>
-        /// Initializes a new instance of the GroverSearchBridge class.
+        /// Initializes a new instance of the QuantumSearch class.
         /// </summary>
-        public GroverSearchBridge()
+        public QuantumSearch()
         {
             _simulator = new QuantumSimulator();
         }
 
         /// <summary>
-        /// Searches for a specific item in an unstructured database using Grover's algorithm.
+        /// Searches for an item in a collection using quantum search.
         /// </summary>
-        /// <param name="searchSpace">The size of the search space (must be a power of 2)</param>
-        /// <param name="targetItem">The target item to find (must be less than searchSpace)</param>
-        /// <param name="iterations">Optional: Number of Grover iterations to perform. If not specified, uses the optimal number.</param>
-        /// <returns>The index of the found item</returns>
-        public async Task<long> SearchAsync(long searchSpace, long targetItem, long? iterations = null)
+        /// <typeparam name="T">The type of items in the collection.</typeparam>
+        /// <param name="collection">The collection to search in.</param>
+        /// <param name="item">The item to search for.</param>
+        /// <returns>The found item and its index.</returns>
+        public async Task<(T Item, int Index)> Search<T>(IList<T> collection, T item)
         {
-            ValidateInputs(searchSpace, targetItem);
+            if (collection == null) throw new ArgumentNullException(nameof(collection));
+            if (collection.Count == 0) throw new ArgumentException("Collection cannot be empty", nameof(collection));
             
-            // Calculate the number of qubits needed to represent the search space
-            int numQubits = (int)Math.Ceiling(Math.Log2(searchSpace));
+            // Find the index of the item
+            int targetIndex = -1;
+            for (int i = 0; i < collection.Count; i++)
+            {
+                if (EqualityComparer<T>.Default.Equals(collection[i], item))
+                {
+                    targetIndex = i;
+                    break;
+                }
+            }
             
-            // Calculate optimal number of iterations if not specified
-            long iterationsToUse = iterations ?? GetOptimalIterationCount(searchSpace, 1);
+            if (targetIndex == -1)
+                throw new InvalidOperationException($"Item not found in the collection");
             
-            // Create oracle for the target item
-            var oracle = CreateOracleForItem.Run(_simulator, numQubits, targetItem).Result;
+            // Perform quantum search
+            int foundIndex = (int)await SearchInternalAsync(collection.Count, targetIndex);
             
-            // Run Grover's search algorithm
-            var result = await GroverSearch.Run(_simulator, numQubits, oracle, iterationsToUse);
-            
-            return result;
+            return (collection[foundIndex], foundIndex);
         }
         
         /// <summary>
-        /// Searches for items matching a predicate in an unstructured database using Grover's algorithm.
+        /// Searches for an item matching a predicate in a collection using quantum search.
         /// </summary>
-        /// <param name="searchSpace">The size of the search space (must be a power of 2)</param>
-        /// <param name="predicate">A function that determines if an item matches the search criteria</param>
-        /// <param name="estimatedMatches">Estimated number of items that match the predicate</param>
-        /// <param name="maxAttempts">Maximum number of search attempts</param>
-        /// <returns>An item that matches the predicate</returns>
-        public async Task<long> SearchWithPredicateAsync(long searchSpace, Func<long, bool> predicate, long estimatedMatches = 1, int maxAttempts = 10)
+        /// <typeparam name="T">The type of items in the collection.</typeparam>
+        /// <param name="collection">The collection to search in.</param>
+        /// <param name="predicate">A function that determines if an item matches the search criteria.</param>
+        /// <param name="maxAttempts">Maximum number of search attempts.</param>
+        /// <returns>The first item that matches the predicate and its index.</returns>
+        public async Task<(T Item, int Index)> SearchWhere<T>(IList<T> collection, Func<T, bool> predicate, int maxAttempts = 5)
         {
-            ValidateInputs(searchSpace, 0);
+            if (collection == null) throw new ArgumentNullException(nameof(collection));
+            if (collection.Count == 0) throw new ArgumentException("Collection cannot be empty", nameof(collection));
+            if (predicate == null) throw new ArgumentNullException(nameof(predicate));
+            
+            // Count matches for estimating optimal iterations
+            int matchCount = 0;
+            List<int> matchingIndices = new List<int>();
+            
+            for (int i = 0; i < collection.Count; i++)
+            {
+                if (predicate(collection[i]))
+                {
+                    matchCount++;
+                    matchingIndices.Add(i);
+                }
+            }
+            
+            if (matchCount == 0)
+                throw new InvalidOperationException("No items match the predicate in the collection");
+            
+            // Convert the predicate to work with indices
+            Func<long, bool> indexPredicate = index => 
+                index >= 0 && 
+                index < collection.Count && 
+                predicate(collection[(int)index]);
+            
+            // Calculate required search space size (next power of 2)
+            long searchSpace = GetNextPowerOfTwo(collection.Count);
+            
+            // Perform quantum search with the predicate
+            int foundIndex = (int)await SearchWithPredicateInternalAsync(
+                searchSpace, 
+                indexPredicate, 
+                matchCount, 
+                maxAttempts
+            );
+            
+            return (collection[foundIndex], foundIndex);
+        }
+        
+        /// <summary>
+        /// Internal method that handles the quantum search implementation.
+        /// </summary>
+        private async Task<long> SearchInternalAsync(long collectionSize, long targetIndex)
+        {
+            // Calculate search space size (next power of 2)
+            long searchSpace = GetNextPowerOfTwo(collectionSize);
             
             // Calculate the number of qubits needed to represent the search space
             int numQubits = (int)Math.Ceiling(Math.Log2(searchSpace));
             
             // Calculate optimal number of iterations
-            long iterations = GetOptimalIterationCount(searchSpace, estimatedMatches);
+            long iterations = CalculateOptimalIterations.Run(_simulator, searchSpace, 1).Result;
+            
+            // Create oracle for the target item
+            var oracle = CreateOracleForItem.Run(_simulator, numQubits, targetIndex).Result;
+            
+            // Run Grover's search algorithm
+            var result = await GroverSearch.Run(_simulator, numQubits, oracle, iterations);
+            
+            // If the result is outside the collection range, retry with a different approach
+            if (result >= collectionSize)
+            {
+                // Use predicate-based search to stay within bounds
+                Func<long, bool> exactIndexPredicate = index => index == targetIndex;
+                return await SearchWithPredicateInternalAsync(searchSpace, exactIndexPredicate, 1, 3);
+            }
+            
+            return result;
+        }
+        
+        /// <summary>
+        /// Internal method that handles the quantum search with a predicate.
+        /// </summary>
+        private async Task<long> SearchWithPredicateInternalAsync(
+            long searchSpace, 
+            Func<long, bool> predicate, 
+            long estimatedMatches = 1, 
+            int maxAttempts = 5)
+        {
+            // Calculate the number of qubits needed to represent the search space
+            int numQubits = (int)Math.Ceiling(Math.Log2(searchSpace));
+            
+            // Calculate optimal number of iterations
+            long iterations = CalculateOptimalIterations.Run(_simulator, searchSpace, estimatedMatches).Result;
             
             // Make multiple attempts since Grover's algorithm is probabilistic
             for (int attempt = 0; attempt < maxAttempts; attempt++)
@@ -102,40 +188,16 @@ namespace EasyQ.Algorithms
         }
         
         /// <summary>
-        /// Calculates the optimal number of Grover iterations for a given problem size.
+        /// Returns the next power of 2 that is greater than or equal to the input.
         /// </summary>
-        private long GetOptimalIterationCount(long searchSpace, long estimatedMatches)
+        private long GetNextPowerOfTwo(long n)
         {
-            return CalculateOptimalIterations.Run(_simulator, searchSpace, estimatedMatches).Result;
-        }
-        
-        /// <summary>
-        /// Validates the inputs for the search algorithm.
-        /// </summary>
-        private void ValidateInputs(long searchSpace, long targetItem)
-        {
-            if (searchSpace <= 0)
+            long power = 1;
+            while (power < n)
             {
-                throw new ArgumentException("Search space must be positive", nameof(searchSpace));
+                power *= 2;
             }
-            
-            if (!IsPowerOfTwo(searchSpace))
-            {
-                throw new ArgumentException("Search space must be a power of 2", nameof(searchSpace));
-            }
-            
-            if (targetItem < 0 || targetItem >= searchSpace)
-            {
-                throw new ArgumentException($"Target item must be between 0 and {searchSpace - 1}", nameof(targetItem));
-            }
-        }
-        
-        /// <summary>
-        /// Checks if a number is a power of 2.
-        /// </summary>
-        private bool IsPowerOfTwo(long x)
-        {
-            return x > 0 && (x & (x - 1)) == 0;
+            return power;
         }
         
         /// <summary>
@@ -143,7 +205,33 @@ namespace EasyQ.Algorithms
         /// </summary>
         public void Dispose()
         {
-            _simulator?.Dispose();
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+        
+        /// <summary>
+        /// Disposes the quantum simulator.
+        /// </summary>
+        /// <param name="disposing">Whether this is being called from Dispose or the finalizer</param>
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!_disposed)
+            {
+                if (disposing)
+                {
+                    _simulator?.Dispose();
+                }
+                
+                _disposed = true;
+            }
+        }
+        
+        /// <summary>
+        /// Finalizer
+        /// </summary>
+        ~QuantumSearch()
+        {
+            Dispose(false);
         }
     }
 }

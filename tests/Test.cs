@@ -47,31 +47,28 @@ namespace EasyQTests
                 Console.WriteLine($"[{i}] {nameDatabase[i]}");
             }
             
-            using var searcher = new GroverSearchBridge();
+            using var searcher = new QuantumSearch();
             
-            // Demo 1: Search for a specific name by index
+            // Demo 1: Search for a specific name by value
             Console.WriteLine("\n1. Searching for a specific name (Grace)");
             string targetName = "Grace";
-            long targetIndex = nameDatabase.IndexOf(targetName);
             
-            Console.WriteLine($"Target: '{targetName}' is at index {targetIndex}");
-            Console.WriteLine("Running quantum search to find this index...");
+            Console.WriteLine($"Target: '{targetName}'");
+            Console.WriteLine("Running quantum search to find this name...");
             
             var startTime = DateTime.Now;
-            var result = await searcher.SearchAsync(nameDatabase.Count, targetIndex);
+            var result = await searcher.Search(nameDatabase, targetName);
             var duration = DateTime.Now - startTime;
             
             Console.WriteLine($"Search completed in {duration.TotalMilliseconds:F2}ms");
-            Console.WriteLine($"Found index: {result}, Name: {nameDatabase[(int)result]}");
+            Console.WriteLine($"Found '{result.Item}' at index {result.Index}");
             
             // Demo 2: Search for a name with specific criteria
             Console.WriteLine("\n2. Searching for a name starting with 'K'");
             
             // Create a predicate function: find names starting with K
-            Func<long, bool> startsWithK = index => 
-                index >= 0 && 
-                index < nameDatabase.Count && 
-                nameDatabase[(int)index].StartsWith("K", StringComparison.OrdinalIgnoreCase);
+            Func<string, bool> startsWithK = name => 
+                name.StartsWith("K", StringComparison.OrdinalIgnoreCase);
             
             // Count matches for optimal iterations
             var matchingNames = nameDatabase.Where(name => 
@@ -81,18 +78,13 @@ namespace EasyQTests
             Console.WriteLine("Running quantum search with predicate...");
             
             startTime = DateTime.Now;
-            result = await searcher.SearchWithPredicateAsync(
-                nameDatabase.Count, 
-                startsWithK,
-                estimatedMatches: matchingNames.Count,
-                maxAttempts: 5
-            );
+            result = await searcher.SearchWhere(nameDatabase, startsWithK);
             duration = DateTime.Now - startTime;
             
             Console.WriteLine($"Search completed in {duration.TotalMilliseconds:F2}ms");
-            Console.WriteLine($"Found index: {result}, Name: {nameDatabase[(int)result]}");
+            Console.WriteLine($"Found '{result.Item}' at index {result.Index}");
             
-            if (startsWithK(result))
+            if (startsWithK(result.Item))
             {
                 Console.WriteLine("Success! The result matches our criteria.");
             }
@@ -101,37 +93,48 @@ namespace EasyQTests
                 Console.WriteLine("Warning: The result does not match our criteria.");
             }
             
-            // Demo 3: Compare with classical search
-            Console.WriteLine("\n3. Classical vs Quantum Search Comparison");
+            // Demo 3: Search with a more complex predicate
+            Console.WriteLine("\n3. Searching for a name with 5+ characters and containing 'a'");
             
-            // Classical search (linear)
-            Console.WriteLine("Running classical linear search...");
+            Func<string, bool> complexPredicate = name => 
+                name.Length >= 5 && name.Contains("a", StringComparison.OrdinalIgnoreCase);
+            
             startTime = DateTime.Now;
+            result = await searcher.SearchWhere(nameDatabase, complexPredicate);
+            duration = DateTime.Now - startTime;
             
-            long classicalResult = -1;
-            for (int i = 0; i < nameDatabase.Count; i++)
+            Console.WriteLine($"Search completed in {duration.TotalMilliseconds:F2}ms");
+            Console.WriteLine($"Found '{result.Item}' at index {result.Index}");
+            
+            if (complexPredicate(result.Item))
             {
-                if (nameDatabase[i] == targetName)
-                {
-                    classicalResult = i;
-                    break;
-                }
+                Console.WriteLine("Success! The result matches our complex criteria.");
+            }
+            else
+            {
+                Console.WriteLine("Warning: The result does not match our criteria.");
             }
             
-            var classicalDuration = DateTime.Now - startTime;
-            Console.WriteLine($"Classical search completed in {classicalDuration.TotalMilliseconds:F2}ms");
-            Console.WriteLine($"Found index: {classicalResult}");
+            // Demo 4: Search in a non-power-of-2 database
+            Console.WriteLine("\n4. Searching in a non-power-of-2 database");
             
-            // Quantum search
-            Console.WriteLine("Running quantum search...");
+            // Create a database with a non-power-of-2 size
+            var nonPowerOfTwoDatabase = new List<string>(nameDatabase);
+            nonPowerOfTwoDatabase.Add("Quinn");
+            nonPowerOfTwoDatabase.Add("Rachel");
+            nonPowerOfTwoDatabase.Add("Sam");
+            
+            Console.WriteLine($"Database size: {nonPowerOfTwoDatabase.Count} (not a power of 2)");
+            
+            targetName = "Quinn";
             startTime = DateTime.Now;
-            result = await searcher.SearchAsync(nameDatabase.Count, targetIndex);
-            var quantumDuration = DateTime.Now - startTime;
-            Console.WriteLine($"Quantum search completed in {quantumDuration.TotalMilliseconds:F2}ms");
-            Console.WriteLine($"Found index: {result}");
+            result = await searcher.Search(nonPowerOfTwoDatabase, targetName);
+            duration = DateTime.Now - startTime;
             
-            Console.WriteLine("\nNote: For small datasets, classical search might be faster due to quantum simulation overhead.");
-            Console.WriteLine("For large datasets, quantum search would show a theoretical quadratic speedup.");
+            Console.WriteLine($"Search completed in {duration.TotalMilliseconds:F2}ms");
+            Console.WriteLine($"Found '{result.Item}' at index {result.Index}");
+            
+            Console.WriteLine("\nDemos completed successfully!");
         }
     }
 }
