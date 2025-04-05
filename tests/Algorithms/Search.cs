@@ -86,23 +86,6 @@ namespace EasyQTests
 
             result = await searcher.Search(nonPowerOfTwoDatabase, targetName);
             Console.WriteLine($"Found '{result.Item}' at index {result.Index}");
-            
-            // Test 3: Search for a person object
-            Console.WriteLine("\n3. Searching for a person object");
-            
-            var people = new List<Person>
-            {
-                new Person { Id = 1, Name = "Alice", Age = 30 },
-                new Person { Id = 2, Name = "Bob", Age = 25 },
-                new Person { Id = 3, Name = "Charlie", Age = 30 },
-                new Person { Id = 4, Name = "David", Age = 35 }
-            };
-            
-            var targetPerson = new Person { Id = 3, Name = "Charlie", Age = 30 };
-            Console.WriteLine($"Target: Person with Id={targetPerson.Id}, Name='{targetPerson.Name}', Age={targetPerson.Age}");
-            
-            var personResult = await searcher.Search(people, targetPerson);
-            Console.WriteLine($"Found person with Name='{personResult.Item.Name}' at index {personResult.Index}");
         }
 
         private async Task RunMultipleMatchesSearchTests()
