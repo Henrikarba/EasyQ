@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <RootNamespace>EasyQ.Abstractions</RootNamespace>
+    <AssemblyName>EasyQ.Abstractions</AssemblyName>
+    <Title>EasyQ Abstractions</Title>
+    <Description>Abstraction layer for the EasyQ quantum computing framework for regular developers</Description>
+  </PropertyGroup>
+
+</Project>
