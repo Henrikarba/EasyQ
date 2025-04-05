@@ -13,6 +13,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Abstractions\Abstractions.csproj" />
     <ProjectReference Include="..\Core\Core.csproj" />
+    <ProjectReference Include="..\Quantum\Quantum.csproj" />
   </ItemGroup>
 
 </Project>
