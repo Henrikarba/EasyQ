@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <RootNamespace>EasyQ.Bridge</RootNamespace>
+    <AssemblyName>EasyQ.Bridge</AssemblyName>
+    <Title>EasyQ Bridge</Title>
+    <Description>Developer-friendly APIs for quantum computing without requiring quantum knowledge</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Quantum\Quantum.csproj" />
+  </ItemGroup>
+
+</Project>

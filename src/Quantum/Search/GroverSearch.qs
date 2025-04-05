@@ -1,4 +1,4 @@
-namespace EasyQ.Quantum.Algorithms {
+namespace EasyQ.Quantum.Search {
     open Microsoft.Quantum.Arrays;
     open Microsoft.Quantum.Canon;
     open Microsoft.Quantum.Convert;

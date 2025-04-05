@@ -1,7 +1,7 @@
 using Microsoft.Quantum.Simulation.Simulators;
-using EasyQ.Quantum.Algorithms;
+using EasyQ.Quantum.Search;
 
-namespace EasyQ.Algorithms
+namespace EasyQ.Bridge.Search
 {
     /// <summary>
     /// Configuration options for quantum search operations.
