@@ -365,17 +365,17 @@ namespace EasyQ.Quantum.Cryptography {
         let classicalLimit = 2.0;
         
         // Calculate a security factor (1.0 means perfect, 0.0 means potentially compromised)
-        let securityFactor = (securityParameter - classicalLimit) / (quantumMax - classicalLimit);
+        let secFactor = (securityParameter - classicalLimit) / (quantumMax - classicalLimit);
         // Clamp to [0, 1] without using Max/Min on doubles
-        let securityFactor = securityFactor < 0.0 ? 0.0 
-                            | securityFactor > 1.0 ? 1.0 
-                            | securityFactor;
+        let clampedSecFactor = secFactor < 0.0 ? 0.0 
+                           | secFactor > 1.0 ? 1.0 
+                           | secFactor;
         
         // Estimate potential information leakage based on security test results and known leakage
-        let leakageEstimate = IntAsDouble(leakedBits) + IntAsDouble(rawLength) * (1.0 - securityFactor) * 0.5;
+        let leakEstimate = IntAsDouble(leakedBits) + IntAsDouble(rawLength) * (1.0 - clampedSecFactor) * 0.5;
         
         // Calculate actual secure length (with safety margin)
-        let secureLength = Max([1, Min([targetLength, rawLength - Ceiling(leakageEstimate) - 4])]);
+        let secureLength = Max([1, Min([targetLength, rawLength - Ceiling(leakEstimate) - 4])]);
         
         // Apply toeplitz-like hash function (simplified for simulation)
         mutable finalKey = [false, size = secureLength];
@@ -588,9 +588,28 @@ namespace EasyQ.Quantum.Cryptography {
             // No secure bits can be generated if we don't exceed the classical bound
             return 0;
         }
+
+        let binaryEntropy = BinaryEntropyCalc(errorRate);
         
-        // Binary entropy function H(p) = -p*log(p) - (1-p)*log(1-p)
-        function h(p : Double) : Double {
+        // Calculate secure key rate r ≈ 1 - H(e) - leakage
+        // where e is the error rate and leakage is potential information leakage
+        
+        // Estimated information leakage (decreases as security parameter increases)
+        let maxDeviation = 0.83;  // 2√2 - 2 ≈ 0.83
+        let leakage = 1.0 - (securityMargin / maxDeviation);
+        let clampedLeakage = leakage < 0.0 ? 0.0 | leakage > 1.0 ? 1.0 | leakage;
+        
+        // Calculate secure key rate
+        let rate = 1.0 - binaryEntropy - clampedLeakage;
+        // Ensure non-negative rate
+        let secureRate = rate < 0.0 ? 0.0 | rate;
+        
+        // Calculate estimated secure bits
+        return Max([0, Floor(IntAsDouble(numRawBits) * secureRate)]);
+    }
+
+    // Binary entropy function implementation
+        function BinaryEntropyCalc(p : Double) : Double {
             if (p <= 0.0 or p >= 1.0) {
                 return 0.0;
             }
@@ -602,21 +621,4 @@ namespace EasyQ.Quantum.Cryptography {
             
             return term1 + term2;
         }
-        
-        // Calculate secure key rate r ≈ 1 - H(e) - leakage
-        // where e is the error rate and leakage is potential information leakage
-        
-        // Estimated information leakage (decreases as security parameter increases)
-        let maxDeviation = 0.83;  // 2√2 - 2 ≈ 0.83
-        let leakageEstimate = 1.0 - (securityMargin / maxDeviation);
-        let leakageEstimate = leakageEstimate < 0.0 ? 0.0 | leakageEstimate > 1.0 ? 1.0 | leakageEstimate;
-        
-        // Calculate secure key rate
-        let secureRate = 1.0 - h(errorRate) - leakageEstimate;
-        // Ensure non-negative without using Max on doubles
-        let secureRate = secureRate < 0.0 ? 0.0 | secureRate;
-        
-        // Calculate estimated secure bits
-        return Max([0, Floor(IntAsDouble(numRawBits) * secureRate)]);
-    }
 }
