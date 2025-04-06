@@ -18,8 +18,8 @@ namespace EasyQ.Quantum.Cryptography {
     /// The basis to use for encoding (0 for computational, 1 for Hadamard).
     ///
     /// # Output
-    /// A qubit prepared in the appropriate state.
-    operation PrepareBB84State(bit : Bool, basis : Bool, q : Qubit) : Qubit {
+    /// None - modifies the qubit in place.
+    operation PrepareBB84State(bit : Bool, basis : Bool, q : Qubit) : Unit {
         // If the bit is 1, apply X to get |1⟩ instead of |0⟩
         if (bit) {
             X(q);
@@ -29,8 +29,6 @@ namespace EasyQ.Quantum.Cryptography {
         if (basis) {
             H(q);
         }
-        
-        return q;
     }
     
     /// # Summary
@@ -186,7 +184,7 @@ namespace EasyQ.Quantum.Cryptography {
     ///
     /// # Output
     /// Tuple containing the error rate and the sifted key (with sample bits removed).
-    function KeyReconciliation(
+    operation KeyReconciliation(
         senderBits : Bool[], 
         receiverBits : Bool[], 
         matchingBases : Bool[], 
@@ -248,7 +246,7 @@ namespace EasyQ.Quantum.Cryptography {
         return (errorRate, finalKey);
     }
 
-    function ContainsInt(array : Int[], value : Int) : Bool {
+    operation ContainsInt(array : Int[], value : Int) : Bool {
         for item in array {
             if item == value {
                 return true;
@@ -270,7 +268,7 @@ namespace EasyQ.Quantum.Cryptography {
     ///
     /// # Output
     /// The final secure key.
-    function PrivacyAmplification(rawKey : Bool[], finalLength : Int, seed : Int) : Bool[] {
+    operation PrivacyAmplification(rawKey : Bool[], finalLength : Int, seed : Int) : Bool[] {
         // For now, this is a simplified version that just performs
         // a kind of one-time pad with a hash function
         // In a real implementation, this would use more sophisticated methods

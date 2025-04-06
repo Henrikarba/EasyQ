@@ -53,6 +53,7 @@ namespace EasyQ.Quantum.Cryptography {
     operation GenerateRandomInt(min : Int, max : Int) : Int {
         // Calculate how many bits we need to represent the range
         let range = max - min + 1;
+        // Use Ceiling(Lg(x)) to get required bits - wrapped as a proper function call
         let numBits = Ceiling(Lg(IntAsDouble(range)));
         
         // Generate random bits
@@ -60,7 +61,7 @@ namespace EasyQ.Quantum.Cryptography {
         repeat {
             let bits = GenerateRandomBits(numBits);
             // Convert bits to integer
-            result = min + BoolArrayAsInt(bits) % range;
+            set result = min + BoolArrayAsInt(bits) % range;
         } until (result >= min and result <= max);
         
         return result;
