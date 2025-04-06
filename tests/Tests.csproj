@@ -24,14 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\src\Algorithms\Algorithms.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Algorithms\" />
-    <Folder Include="Core\" />
-    <Folder Include="Providers\" />
-    <Folder Include="Integration\" />
+    <ProjectReference Include="..\src\Bridge\Bridge.csproj" />
   </ItemGroup>
 
 </Project>
