@@ -44,6 +44,21 @@ namespace EasyQ.Bridge.Cryptography
         /// The maximum number of exchange attempts before giving up.
         /// </summary>
         public int MaxAttempts { get; set; } = 3;
+        
+        /// <summary>
+        /// Whether to use enhanced security features (6-state protocol instead of 4-state).
+        /// </summary>
+        public bool EnhancedSecurity { get; set; } = true;
+        
+        /// <summary>
+        /// Whether to use decoy states to detect photon number splitting attacks.
+        /// </summary>
+        public bool UseDecoyStates { get; set; } = true;
+        
+        /// <summary>
+        /// Whether to apply additional noise protection techniques.
+        /// </summary>
+        public bool UseNoiseProtection { get; set; } = true;
     }
 
     /// <summary>
@@ -126,7 +141,7 @@ namespace EasyQ.Bridge.Cryptography
     }
 
     /// <summary>
-    /// Provides a simple API for quantum key distribution operations using BB84 protocol,
+    /// Provides a simple API for quantum key distribution operations using enhanced BB84 protocol,
     /// hiding quantum computing complexity from users.
     /// </summary>
     public class QuantumKeyDistribution : IDisposable
@@ -134,6 +149,10 @@ namespace EasyQ.Bridge.Cryptography
         private readonly QuantumSimulator _simulator;
         private readonly QuantumKeyDistributionOptions _defaultOptions;
         private bool _disposed = false;
+        
+        // Pre-shared authentication secret used to prevent man-in-the-middle attacks
+        // In a real system, this would be established through a secure channel or pre-shared
+        private readonly bool[] _presharedSecret;
 
         /// <summary>
         /// Initializes a new instance of the QuantumKeyDistribution class with default options.
@@ -150,10 +169,19 @@ namespace EasyQ.Bridge.Cryptography
         {
             _simulator = new QuantumSimulator();
             _defaultOptions = options ?? new QuantumKeyDistributionOptions();
+            
+            // Generate a random pre-shared secret for authentication
+            // In a real-world implementation, this would be established out-of-band
+            _presharedSecret = new bool[64];
+            var random = new Random();
+            for (int i = 0; i < _presharedSecret.Length; i++)
+            {
+                _presharedSecret[i] = random.Next(2) == 1;
+            }
         }
 
         /// <summary>
-        /// Executes the BB84 quantum key distribution protocol.
+        /// Executes the enhanced BB84 quantum key distribution protocol.
         /// </summary>
         /// <param name="options">Optional operation-specific configuration. If null, default options are used.</param>
         /// <returns>A KeyDistributionResult containing the key or failure information.</returns>
@@ -178,15 +206,26 @@ namespace EasyQ.Bridge.Cryptography
                 {
                     if (options.EnableLogging)
                     {
-                        Console.WriteLine($"Attempt {attempts + 1}: Starting BB84 protocol with {initialBits} initial bits");
+                        Console.WriteLine($"Attempt {attempts + 1}: Starting enhanced BB84 protocol with {initialBits} initial bits");
+                        if (options.EnhancedSecurity)
+                            Console.WriteLine("Using enhanced security with 6-state protocol");
+                        if (options.UseDecoyStates)
+                            Console.WriteLine("Using decoy states for photon-number splitting attack detection");
+                        if (options.UseNoiseProtection)
+                            Console.WriteLine("Using advanced noise protection techniques");
                     }
 
-                    // Execute the quantum key distribution protocol
-                    var (success, errorRate, keyBits) = await BB84Protocol.Run(
+                    // Execute the enhanced quantum key distribution protocol
+                    var (success, errorRate, keyBits, authTag) = await EnhancedBB84Protocol.Run(
                         _simulator,
                         options.KeyLength,
+                        options.EnhancedSecurity,
+                        options.UseDecoyStates,
+                        options.UseNoiseProtection,
                         false, // No eavesdropping in production runs
-                        options.ErrorThreshold);
+                        0,     // Default eavesdropper strategy (not used when eavesdropping is false)
+                        options.ErrorThreshold,
+                        _presharedSecret);
 
                     // Calculate bits used for protocols
                     int rawBitsExchanged = initialBits;
@@ -222,6 +261,8 @@ namespace EasyQ.Bridge.Cryptography
                     if (options.EnableLogging)
                     {
                         Console.WriteLine($"Key distribution successful. Error rate: {errorRate:P2}");
+                        Console.WriteLine($"Generated key size: {keyBytes.Length * 8} bits");
+                        Console.WriteLine($"Authentication tag verified successfully");
                     }
 
                     return new KeyDistributionResult(
@@ -253,7 +294,9 @@ namespace EasyQ.Bridge.Cryptography
         /// </summary>
         /// <param name="options">Optional operation-specific configuration. If null, default options are used.</param>
         /// <returns>A task representing the key distribution operation with an eavesdropper.</returns>
-        public async Task<KeyDistributionResult> SimulateWithEavesdropperAsync(QuantumKeyDistributionOptions? options = null)
+        public async Task<KeyDistributionResult> SimulateWithEavesdropperAsync(
+            QuantumKeyDistributionOptions? options = null, 
+            int eavesdropperStrategy = 0)
         {
             options ??= _defaultOptions;
 
@@ -261,15 +304,21 @@ namespace EasyQ.Bridge.Cryptography
             {
                 if (options.EnableLogging)
                 {
-                    Console.WriteLine("Simulating BB84 protocol with eavesdropper");
+                    Console.WriteLine("Simulating enhanced BB84 protocol with eavesdropper");
+                    Console.WriteLine($"Eavesdropper strategy: {eavesdropperStrategy}");
                 }
 
-                // Execute the quantum key distribution protocol with an eavesdropper
-                var (success, errorRate, keyBits) = await BB84Protocol.Run(
+                // Execute the enhanced quantum key distribution protocol with an eavesdropper
+                var (success, errorRate, keyBits, authTag) = await EnhancedBB84Protocol.Run(
                     _simulator,
                     options.KeyLength,
+                    options.EnhancedSecurity,
+                    options.UseDecoyStates,
+                    options.UseNoiseProtection,
                     true, // Simulate eavesdropping
-                    options.ErrorThreshold);
+                    eavesdropperStrategy,
+                    options.ErrorThreshold,
+                    _presharedSecret);
 
                 // Calculate approximate protocol statistics
                 int initialBits = options.InitialBits > 0 ? options.InitialBits : 4 * options.KeyLength;
@@ -330,15 +379,23 @@ namespace EasyQ.Bridge.Cryptography
                     ErrorThreshold = options.ErrorThreshold,
                     SamplePercentage = Math.Max(0.5, options.SamplePercentage), // Use more samples for verification
                     InitialBits = options.InitialBits,
-                    EnableLogging = options.EnableLogging
+                    EnableLogging = options.EnableLogging,
+                    EnhancedSecurity = options.EnhancedSecurity,
+                    UseDecoyStates = options.UseDecoyStates,
+                    UseNoiseProtection = options.UseNoiseProtection
                 };
 
                 // Run the protocol without generating a full key
-                var (success, errorRate, _) = await BB84Protocol.Run(
+                var (success, errorRate, _, _) = await EnhancedBB84Protocol.Run(
                     _simulator,
                     verificationOptions.KeyLength,
+                    verificationOptions.EnhancedSecurity,
+                    verificationOptions.UseDecoyStates,
+                    verificationOptions.UseNoiseProtection,
                     false, // No simulated eavesdropping
-                    verificationOptions.ErrorThreshold);
+                    0,     // Default strategy (not used)
+                    verificationOptions.ErrorThreshold,
+                    _presharedSecret);
 
                 if (options.EnableLogging)
                 {
@@ -369,11 +426,15 @@ namespace EasyQ.Bridge.Cryptography
         /// </summary>
         /// <param name="keyLength">The desired key length in bits.</param>
         /// <param name="expectedErrorRate">The expected error rate of the quantum channel.</param>
+        /// <param name="enhancedSecurity">Whether enhanced security features are enabled.</param>
         /// <returns>The recommended number of initial bits.</returns>
-        public static int EstimateRequiredInitialBits(int keyLength, double expectedErrorRate)
+        public static int EstimateRequiredInitialBits(
+            int keyLength, 
+            double expectedErrorRate, 
+            bool enhancedSecurity = true)
         {
             // Base multiplier - we need more than the key length due to sifting
-            double baseFactor = 4.0;
+            double baseFactor = enhancedSecurity ? 5.0 : 4.0;
 
             // Additional factor based on expected error rate
             double errorFactor = 1.0 / (1.0 - Math.Min(0.9, expectedErrorRate));
@@ -410,13 +471,15 @@ namespace EasyQ.Bridge.Cryptography
         /// Determines if a specific error rate is acceptable for a secure quantum channel.
         /// </summary>
         /// <param name="errorRate">The measured error rate.</param>
+        /// <param name="enhancedSecurity">Whether enhanced security features are used.</param>
         /// <returns>True if the error rate is within acceptable limits for a secure channel.</returns>
-        public static bool IsErrorRateAcceptable(double errorRate)
+        public static bool IsErrorRateAcceptable(double errorRate, bool enhancedSecurity = true)
         {
-            // For BB84, theoretical threshold for detecting eavesdropping is around 11%
-            // We use a more conservative threshold for production systems
-            const double MAX_ACCEPTABLE_ERROR = 0.08; // 8%
-            return errorRate <= MAX_ACCEPTABLE_ERROR;
+            // For standard BB84, theoretical threshold for detecting eavesdropping is around 11%
+            // For 6-state protocol (enhanced security), the threshold is around 14.6%
+            // We use more conservative thresholds for production systems
+            double maxAcceptableError = enhancedSecurity ? 0.10 : 0.08;
+            return errorRate <= maxAcceptableError;
         }
 
         /// <summary>

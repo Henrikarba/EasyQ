@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using EasyQ.Search;
+using EasyQ.Bridge.Search;
 
-namespace EasyQTests
+namespace EasyQTests.Search
 {
     // Person class for the demo
     public class Person

@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using EasyQTests.Cryptography;
+using EasyQTests.Search;
 
 namespace EasyQTests
 {
@@ -24,6 +26,7 @@ namespace EasyQTests
             var testRunners = new List<ITestRunner>
             {
                 new SearchTests(),
+                new KeyDistributionTests(),
                 // Add more test runners here as needed
             };
 
