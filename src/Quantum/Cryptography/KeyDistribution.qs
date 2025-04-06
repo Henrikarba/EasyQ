@@ -230,10 +230,8 @@ namespace EasyQ.Quantum.Cryptography {
             
             // Generate random positions for decoy states
             // In a production system, these would be pseudo-randomly generated with a shared seed
-            mutable decoyPositions = [];
-            for i in 0..numDecoyStates - 1 {
-                set decoyPositions += [GenerateRandomInt(0, adjustedQubits - 1)];
-            }
+            let rng = new Random();
+            decoyPositions = DrawRandomInt(0, adjustedQubits - 1, numDecoyStates);
             
             // Set decoy state values - alternating pattern for simplicity
             for i in 0..Length(decoyPositions) - 1 {
@@ -349,7 +347,7 @@ namespace EasyQ.Quantum.Cryptography {
         mutable availableIndices = SequenceI(0, siftedLength - 1);
         
         for i in 0..actualSampleSize - 1 {
-            let randomIndex = GenerateRandomInt(0, Length(availableIndices) - 1);
+            let randomIndex = DrawRandomInt(0, Length(availableIndices) - 1);
             set sampledIndices += [availableIndices[randomIndex]];
             set availableIndices = availableIndices[0..randomIndex-1] + availableIndices[randomIndex+1..Length(availableIndices)-1];
         }

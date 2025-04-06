@@ -41,12 +41,6 @@ namespace EasyQ.Bridge.Cryptography
         public bool EnableLogging { get; set; } = false;
 
         /// <summary>
-        /// Seed value for privacy amplification. 
-        /// In production, this should be generated through a secure channel.
-        /// </summary>
-        public int? PrivacyAmplificationSeed { get; set; } = null;
-
-        /// <summary>
         /// The maximum number of exchange attempts before giving up.
         /// </summary>
         public int MaxAttempts { get; set; } = 3;
@@ -186,9 +180,6 @@ namespace EasyQ.Bridge.Cryptography
                     {
                         Console.WriteLine($"Attempt {attempts + 1}: Starting BB84 protocol with {initialBits} initial bits");
                     }
-
-                    // Set a seed for privacy amplification if not provided
-                    int seed = options.PrivacyAmplificationSeed ?? new Random().Next();
 
                     // Execute the quantum key distribution protocol
                     var (success, errorRate, keyBits) = await BB84Protocol.Run(
