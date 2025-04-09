@@ -1,158 +1,136 @@
-using Microsoft.Quantum.Simulation.Simulators;
-using EasyQ.Quantum.Cryptography;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.Quantum.Simulation.Simulators;
+using Microsoft.Quantum.Simulation.Core;
+using EasyQ.Quantum.Cryptography;
 
 namespace EasyQ.Bridge.Cryptography
 {
     /// <summary>
-    /// Configuration options for quantum key distribution operations.
+    /// Configuration options for quantum key distribution.
     /// </summary>
     public class QuantumKeyDistributionOptions
     {
         /// <summary>
-        /// The desired final key length in bits.
+        /// The desired length of the generated key in bits.
         /// </summary>
         public int KeyLength { get; set; } = 256;
 
         /// <summary>
-        /// Maximum error rate permitted before considering the channel compromised.
-        /// Error rates above this threshold will abort the key exchange.
+        /// Security level (1-5). Higher values increase security but decrease efficiency.
         /// </summary>
-        public double ErrorThreshold { get; set; } = 0.10;
+        public int SecurityLevel { get; set; } = 3;
 
         /// <summary>
-        /// Percentage of bits to sacrifice for error detection (0.0 to 1.0).
-        /// Higher values provide stronger security at the cost of shorter keys.
+        /// The minimum security parameter (CHSH value) required to consider a channel secure.
+        /// Classical limit is 2.0. Quantum maximum is 2√2 ≈ 2.83.
+        /// Recommended values: 2.2-2.4 for standard security.
         /// </summary>
-        public double SamplePercentage { get; set; } = 0.25;
+        public double SecurityThreshold { get; set; } = 2.2;
 
         /// <summary>
-        /// Number of bits to use in the initial exchange.
-        /// A higher number increases the chance of generating a successful key.
+        /// Maximum number of attempts to generate a key before giving up.
         /// </summary>
-        public int InitialBits { get; set; } = 0;  // 0 means automatic calculation (4x desired key length)
+        public int? MaxAttempts { get; set; } = 5;
 
         /// <summary>
-        /// Determines if detailed protocol steps should be logged.
+        /// Whether to log detailed information about the key distribution process.
         /// </summary>
         public bool EnableLogging { get; set; } = false;
 
         /// <summary>
-        /// The maximum number of exchange attempts before giving up.
+        /// Authentication mode to use for key verification.
         /// </summary>
-        public int MaxAttempts { get; set; } = 3;
-        
+        public AuthenticationMode AuthenticationMode { get; set; } = AuthenticationMode.Standard;
+
         /// <summary>
-        /// Whether to use enhanced security features (6-state protocol instead of 4-state).
+        /// Custom pre-shared authentication secret. If null, a random one will be generated.
         /// </summary>
-        public bool EnhancedSecurity { get; set; } = true;
-        
+        public byte[]? PreSharedSecret { get; set; } = null;
+
         /// <summary>
-        /// Whether to use decoy states to detect photon number splitting attacks.
+        /// Determines if error correction should be performed on the raw key.
         /// </summary>
-        public bool UseDecoyStates { get; set; } = true;
-        
+        public bool EnableErrorCorrection { get; set; } = true;
+
         /// <summary>
-        /// Whether to apply additional noise protection techniques.
+        /// The maximum acceptable error rate before aborting key generation.
         /// </summary>
-        public bool UseNoiseProtection { get; set; } = true;
+        public double MaxAcceptableErrorRate { get; set; } = 0.12;
     }
 
     /// <summary>
-    /// Result of a quantum key distribution operation.
+    /// Authentication modes for quantum key distribution.
+    /// </summary>
+    public enum AuthenticationMode
+    {
+        /// <summary>
+        /// No authentication is performed.
+        /// </summary>
+        None,
+
+        /// <summary>
+        /// Standard authentication using pre-shared secret.
+        /// </summary>
+        Standard,
+
+        /// <summary>
+        /// Enhanced authentication with additional quantum verification.
+        /// </summary>
+        Enhanced
+    }
+
+    /// <summary>
+    /// Results of a quantum key distribution operation.
     /// </summary>
     public class KeyDistributionResult
     {
         /// <summary>
-        /// Whether the key exchange was successful.
+        /// Whether the key distribution was successful.
         /// </summary>
-        public bool Success { get; }
+        public bool Success { get; set; }
 
         /// <summary>
-        /// The generated key as a byte array, or null if exchange failed.
+        /// The generated key (null if unsuccessful).
         /// </summary>
-        public byte[]? Key { get; }
+        public byte[]? Key { get; set; }
 
         /// <summary>
-        /// The detected error rate during reconciliation.
+        /// Authentication tag for key verification.
         /// </summary>
-        public double ErrorRate { get; }
+        public byte[]? AuthenticationTag { get; set; }
 
         /// <summary>
-        /// Reason for failure if Success is false.
+        /// The security parameter value (CHSH inequality test result).
         /// </summary>
-        public string? FailureReason { get; }
+        public double SecurityParameter { get; set; }
 
         /// <summary>
-        /// Number of raw bits exchanged before sifting.
+        /// The observed error rate between sender and receiver keys.
         /// </summary>
-        public int RawBitsExchanged { get; }
+        public double ErrorRate { get; set; }
 
         /// <summary>
-        /// Number of bits after sifting (where bases matched).
+        /// The number of entangled pairs created during the process.
         /// </summary>
-        public int SiftedBitsCount { get; }
+        public int EntangledPairsCreated { get; set; }
 
         /// <summary>
-        /// Number of bits sacrificed for error detection.
+        /// Reason for failure (if unsuccessful).
         /// </summary>
-        public int BitsUsedForErrorDetection { get; }
-
-        /// <summary>
-        /// Constructor for successful key distribution.
-        /// </summary>
-        internal KeyDistributionResult(
-            byte[] key, 
-            double errorRate, 
-            int rawBitsExchanged, 
-            int siftedBitsCount, 
-            int bitsUsedForErrorDetection)
-        {
-            Success = true;
-            Key = key;
-            ErrorRate = errorRate;
-            FailureReason = null;
-            RawBitsExchanged = rawBitsExchanged;
-            SiftedBitsCount = siftedBitsCount;
-            BitsUsedForErrorDetection = bitsUsedForErrorDetection;
-        }
-
-        /// <summary>
-        /// Constructor for failed key distribution.
-        /// </summary>
-        internal KeyDistributionResult(
-            string failureReason, 
-            double errorRate = 0.0, 
-            int rawBitsExchanged = 0, 
-            int siftedBitsCount = 0, 
-            int bitsUsedForErrorDetection = 0)
-        {
-            Success = false;
-            Key = null;
-            ErrorRate = errorRate;
-            FailureReason = failureReason;
-            RawBitsExchanged = rawBitsExchanged;
-            SiftedBitsCount = siftedBitsCount;
-            BitsUsedForErrorDetection = bitsUsedForErrorDetection;
-        }
+        public string? FailureReason { get; set; }
     }
 
     /// <summary>
-    /// Provides a simple API for quantum key distribution operations using enhanced BB84 protocol,
-    /// hiding quantum computing complexity from users.
+    /// Provides a simple API for quantum key distribution, hiding all quantum computing complexity.
+    /// Uses the E91 protocol with entanglement-based quantum key distribution.
     /// </summary>
     public class QuantumKeyDistribution : IDisposable
     {
         private readonly QuantumSimulator _simulator;
-        private readonly QuantumKeyDistributionOptions _defaultOptions;
         private bool _disposed = false;
-        
-        // Pre-shared authentication secret used to prevent man-in-the-middle attacks
-        // In a real system, this would be established through a secure channel or pre-shared
-        private readonly bool[] _presharedSecret;
+        private readonly QuantumKeyDistributionOptions _options;
 
         /// <summary>
         /// Initializes a new instance of the QuantumKeyDistribution class with default options.
@@ -162,301 +140,416 @@ namespace EasyQ.Bridge.Cryptography
         }
 
         /// <summary>
-        /// Initializes a new instance of the QuantumKeyDistribution class with the specified options.
+        /// Initializes a new instance of the QuantumKeyDistribution class with specified options.
         /// </summary>
-        /// <param name="options">Configuration options for key distribution operations.</param>
+        /// <param name="options">Configuration options for quantum key distribution.</param>
         public QuantumKeyDistribution(QuantumKeyDistributionOptions options)
         {
             _simulator = new QuantumSimulator();
-            _defaultOptions = options ?? new QuantumKeyDistributionOptions();
-            
-            // Generate a random pre-shared secret for authentication
-            // In a real-world implementation, this would be established out-of-band
-            _presharedSecret = new bool[64];
-            var random = new Random();
-            for (int i = 0; i < _presharedSecret.Length; i++)
-            {
-                _presharedSecret[i] = random.Next(2) == 1;
-            }
+            _options = options ?? new QuantumKeyDistributionOptions();
         }
 
         /// <summary>
-        /// Executes the enhanced BB84 quantum key distribution protocol.
+        /// Generates a cryptographically secure key using quantum key distribution.
         /// </summary>
-        /// <param name="options">Optional operation-specific configuration. If null, default options are used.</param>
-        /// <returns>A KeyDistributionResult containing the key or failure information.</returns>
-        public async Task<KeyDistributionResult> GenerateKeyAsync(QuantumKeyDistributionOptions? options = null)
+        /// <returns>The result of the key distribution process.</returns>
+        public async Task<KeyDistributionResult> GenerateKeyAsync()
         {
-            options ??= _defaultOptions;
-
-            // Calculate initial bits if not specified
-            int initialBits = options.InitialBits > 0 
-                ? options.InitialBits 
-                : 4 * options.KeyLength; // Default to 4x the desired key length
-
-            // Calculate sample size based on percentage
-            int sampleSize = (int)(initialBits * options.SamplePercentage);
-
-            int attempts = 0;
-            Exception? lastException = null;
-
-            while (attempts < options.MaxAttempts)
+            if (_options.KeyLength <= 0)
             {
+                throw new ArgumentException("Key length must be greater than zero", nameof(_options.KeyLength));
+            }
+
+            if (_options.SecurityLevel < 1 || _options.SecurityLevel > 5)
+            {
+                throw new ArgumentException("Security level must be between 1 and 5", nameof(_options.SecurityLevel));
+            }
+
+            // Number of key generation attempts
+            int maxAttempts = _options.MaxAttempts ?? 5;
+            int attempts = 0;
+
+            // Generate or use pre-shared authentication secret
+            var authSecret = await GenerateOrUseAuthSecret();
+
+            // Save the number of entangled pairs created for reporting
+            int entangledPairsCreated = 0;
+
+            if (_options.EnableLogging)
+            {
+                Console.WriteLine($"Starting quantum key distribution (QKD) process");
+                Console.WriteLine($"Requested key length: {_options.KeyLength} bits");
+                Console.WriteLine($"Security level: {_options.SecurityLevel} (1-5)");
+                Console.WriteLine($"Security threshold: {_options.SecurityThreshold}");
+            }
+
+            while (attempts < maxAttempts)
+            {
+                attempts++;
+
+                if (_options.EnableLogging)
+                {
+                    Console.WriteLine($"\nAttempt {attempts} of {maxAttempts}");
+                }
+
                 try
                 {
-                    if (options.EnableLogging)
+                    // Calculate the number of bytes needed
+                    int keyByteLength = (_options.KeyLength + 7) / 8;
+
+                    // Execute the quantum key distribution protocol
+                    var result = await GenerateQuantumSecureKey.Run(
+                        _simulator, 
+                        _options.KeyLength, 
+                        _options.SecurityLevel,
+                        _options.SecurityThreshold,
+                        authSecret);
+
+                    // Extract the results
+                    bool success = result.Item1;
+                    double securityParameter = result.Item2;
+                    double errorRate = result.Item3;
+                    var keyBits = result.Item4;
+                    var authTag = result.Item5;
+
+                    // Update the number of entangled pairs created
+                    // This is an estimate based on the protocol and security level
+                    entangledPairsCreated = EstimateRequiredPairs(_options.KeyLength, _options.SecurityLevel, errorRate);
+
+                    if (_options.EnableLogging)
                     {
-                        Console.WriteLine($"Attempt {attempts + 1}: Starting enhanced BB84 protocol with {initialBits} initial bits");
-                        if (options.EnhancedSecurity)
-                            Console.WriteLine("Using enhanced security with 6-state protocol");
-                        if (options.UseDecoyStates)
-                            Console.WriteLine("Using decoy states for photon-number splitting attack detection");
-                        if (options.UseNoiseProtection)
-                            Console.WriteLine("Using advanced noise protection techniques");
+                        Console.WriteLine($"QKD result: {(success ? "Success" : "Failed")}");
+                        Console.WriteLine($"Security parameter: {securityParameter:F3}");
+                        Console.WriteLine($"Error rate: {errorRate:P2}");
+                        Console.WriteLine($"Estimated entangled pairs: {entangledPairsCreated}");
                     }
 
-                    // Execute the enhanced quantum key distribution protocol
-                    var (success, errorRate, keyBits, authTag) = await EnhancedBB84Protocol.Run(
-                        _simulator,
-                        options.KeyLength,
-                        options.EnhancedSecurity,
-                        options.UseDecoyStates,
-                        options.UseNoiseProtection,
-                        false, // No eavesdropping in production runs
-                        0,     // Default eavesdropper strategy (not used when eavesdropping is false)
-                        options.ErrorThreshold,
-                        _presharedSecret);
-
-                    // Calculate bits used for protocols
-                    int rawBitsExchanged = initialBits;
-                    int siftedBitsCount = keyBits.Length + sampleSize; // Approximate
-                    int bitsUsedForErrorDetection = sampleSize;
-
-                    if (!success)
+                    // If key generation was successful
+                    if (success && keyBits.Count > 0)
                     {
-                        if (options.EnableLogging)
+                        // Convert bit array to byte array
+                        byte[] key = QArrayToBytesArray(keyBits);
+                        byte[] tag = QArrayToBytesArray(authTag);
+
+                        // Verify authentication if enabled and not in 'None' mode
+                        bool authenticVerified = _options.AuthenticationMode == AuthenticationMode.None ||
+                                               await VerifyAuthenticationKey(key, tag, authSecret);
+
+                        if (!authenticVerified)
                         {
-                            Console.WriteLine($"Key distribution failed: Error rate {errorRate:P2} exceeds threshold {options.ErrorThreshold:P2}");
+                            if (_options.EnableLogging)
+                            {
+                                Console.WriteLine("Authentication verification failed");
+                            }
+                            continue; // Try again
                         }
-                        return new KeyDistributionResult(
-                            $"Error rate {errorRate:P2} exceeds threshold {options.ErrorThreshold:P2}. Possible eavesdropping detected.",
-                            errorRate,
-                            rawBitsExchanged,
-                            siftedBitsCount,
-                            bitsUsedForErrorDetection);
-                    }
 
-                    // Check if we have enough bits for the requested key
-                    if (keyBits.Length < options.KeyLength)
-                    {
-                        if (options.EnableLogging)
+                        if (_options.EnableLogging)
                         {
-                            Console.WriteLine($"Warning: Generated key is shorter than requested ({keyBits.Length} vs {options.KeyLength} bits)");
+                            Console.WriteLine($"Generated {key.Length * 8} key bits successfully");
+                            if (_options.AuthenticationMode != AuthenticationMode.None)
+                            {
+                                Console.WriteLine("Authentication verified successfully");
+                            }
+                        }
+
+                        // Return successful result
+                        return new KeyDistributionResult
+                        {
+                            Success = true,
+                            Key = key,
+                            AuthenticationTag = tag,
+                            SecurityParameter = securityParameter,
+                            ErrorRate = errorRate,
+                            EntangledPairsCreated = entangledPairsCreated
+                        };
+                    }
+                    else
+                    {
+                        // Key generation failed, try again
+                        if (_options.EnableLogging)
+                        {
+                            Console.WriteLine("Key generation failed, retrying...");
                         }
                     }
-
-                    // Convert bit array to byte array
-                    byte[] keyBytes = BoolArrayToByteArray(keyBits);
-
-                    if (options.EnableLogging)
-                    {
-                        Console.WriteLine($"Key distribution successful. Error rate: {errorRate:P2}");
-                        Console.WriteLine($"Generated key size: {keyBytes.Length * 8} bits");
-                        Console.WriteLine($"Authentication tag verified successfully");
-                    }
-
-                    return new KeyDistributionResult(
-                        keyBytes,
-                        errorRate,
-                        rawBitsExchanged,
-                        siftedBitsCount,
-                        bitsUsedForErrorDetection);
                 }
                 catch (Exception ex)
                 {
-                    lastException = ex;
-                    if (options.EnableLogging)
+                    if (_options.EnableLogging)
                     {
-                        Console.WriteLine($"Attempt {attempts + 1} failed: {ex.Message}");
+                        Console.WriteLine($"Error during key generation: {ex.Message}");
                     }
-                    attempts++;
                 }
             }
 
             // All attempts failed
-            return new KeyDistributionResult(
-                $"Key distribution failed after {options.MaxAttempts} attempts: {lastException?.Message ?? "Unknown error"}");
+            string failureReason = "Maximum attempts reached without successful key generation";
+            if (_options.EnableLogging)
+            {
+                Console.WriteLine(failureReason);
+            }
+
+            return new KeyDistributionResult
+            {
+                Success = false,
+                Key = null,
+                SecurityParameter = 0,
+                ErrorRate = 0,
+                EntangledPairsCreated = entangledPairsCreated,
+                FailureReason = failureReason
+            };
         }
 
         /// <summary>
-        /// Simulates key distribution with an eavesdropper to demonstrate quantum security features.
-        /// For demonstration or testing only - not intended for actual secure key generation.
+        /// Verifies the security of a quantum channel without generating a full key.
+        /// Useful for checking if eavesdropping is detected.
         /// </summary>
-        /// <param name="options">Optional operation-specific configuration. If null, default options are used.</param>
-        /// <returns>A task representing the key distribution operation with an eavesdropper.</returns>
-        public async Task<KeyDistributionResult> SimulateWithEavesdropperAsync(
-            QuantumKeyDistributionOptions? options = null, 
-            int eavesdropperStrategy = 0)
+        /// <returns>Tuple containing: (channel is secure, security parameter, error rate)</returns>
+        public async Task<(bool isSecure, double securityParameter, double errorRate)> VerifyChannelSecurityAsync()
         {
-            options ??= _defaultOptions;
+            if (_options.EnableLogging)
+            {
+                Console.WriteLine("Verifying quantum channel security...");
+            }
 
             try
             {
-                if (options.EnableLogging)
+                // Define parameters for a smaller test
+                int testKeyLength = Math.Min(32, _options.KeyLength);
+
+                // Generate or use pre-shared authentication secret
+                var authSecret = await GenerateOrUseAuthSecret();
+
+                // Execute the quantum key distribution protocol in verification mode
+                var result = await GenerateQuantumSecureKey.Run(
+                    _simulator, 
+                    testKeyLength, 
+                    _options.SecurityLevel,
+                    _options.SecurityThreshold,
+                    authSecret);
+
+                // Extract the results
+                bool success = result.Item1;
+                double securityParameter = result.Item2;
+                double errorRate = result.Item3;
+
+                bool isSecure = success && securityParameter >= _options.SecurityThreshold && errorRate <= _options.MaxAcceptableErrorRate;
+
+                if (_options.EnableLogging)
                 {
-                    Console.WriteLine("Simulating enhanced BB84 protocol with eavesdropper");
-                    Console.WriteLine($"Eavesdropper strategy: {eavesdropperStrategy}");
+                    Console.WriteLine($"Channel security verification result: {(isSecure ? "Secure" : "Potentially compromised")}");
+                    Console.WriteLine($"Security parameter: {securityParameter:F3} (minimum: {_options.SecurityThreshold})");
+                    Console.WriteLine($"Error rate: {errorRate:P2} (maximum: {_options.MaxAcceptableErrorRate:P2})");
                 }
 
-                // Execute the enhanced quantum key distribution protocol with an eavesdropper
-                var (success, errorRate, keyBits, authTag) = await EnhancedBB84Protocol.Run(
-                    _simulator,
-                    options.KeyLength,
-                    options.EnhancedSecurity,
-                    options.UseDecoyStates,
-                    options.UseNoiseProtection,
-                    true, // Simulate eavesdropping
-                    eavesdropperStrategy,
-                    options.ErrorThreshold,
-                    _presharedSecret);
-
-                // Calculate approximate protocol statistics
-                int initialBits = options.InitialBits > 0 ? options.InitialBits : 4 * options.KeyLength;
-                int sampleSize = (int)(initialBits * options.SamplePercentage);
-                int siftedBitsCount = keyBits.Length + sampleSize; // Approximate
-
-                if (!success)
-                {
-                    if (options.EnableLogging)
-                    {
-                        Console.WriteLine($"Eavesdropper detected! Error rate: {errorRate:P2}");
-                    }
-                    return new KeyDistributionResult(
-                        "Eavesdropper detected",
-                        errorRate,
-                        initialBits,
-                        siftedBitsCount,
-                        sampleSize);
-                }
-
-                // This case is unlikely but possible if the eavesdropping wasn't detected
-                if (options.EnableLogging)
-                {
-                    Console.WriteLine($"Warning: Eavesdropper not detected. Error rate: {errorRate:P2}");
-                }
-
-                // Convert bit array to byte array
-                byte[] keyBytes = BoolArrayToByteArray(keyBits);
-
-                return new KeyDistributionResult(
-                    keyBytes,
-                    errorRate,
-                    initialBits,
-                    siftedBitsCount,
-                    sampleSize);
+                return (isSecure, securityParameter, errorRate);
             }
             catch (Exception ex)
             {
-                return new KeyDistributionResult($"Simulation failed: {ex.Message}");
+                if (_options.EnableLogging)
+                {
+                    Console.WriteLine($"Error during channel verification: {ex.Message}");
+                }
+                return (false, 0, 0);
             }
         }
 
         /// <summary>
-        /// Verifies if a key distribution channel is secure by checking for eavesdropping.
+        /// Simulates the protocol efficiency under various conditions.
+        /// Useful for estimating performance without running the full protocol.
         /// </summary>
-        /// <param name="options">Optional operation-specific configuration. If null, default options are used.</param>
-        /// <returns>A tuple containing (isSecure, errorRate).</returns>
-        public async Task<(bool isSecure, double errorRate)> VerifyChannelSecurityAsync(QuantumKeyDistributionOptions? options = null)
+        /// <returns>Dictionary mapping condition descriptions to key yield ratios</returns>
+        public Dictionary<string, double> SimulateProtocolEfficiency()
         {
-            options ??= _defaultOptions;
+            var results = new Dictionary<string, double>();
+
+            // Test different combinations of security parameters and error rates
+            double[] securityParams = { 2.0, 2.1, 2.2, 2.3, 2.4, 2.5, 2.6, 2.7, 2.8 };
+            double[] errorRates = { 0.01, 0.03, 0.05, 0.07, 0.1 };
+
+            foreach (var s in securityParams)
+            {
+                foreach (var e in errorRates)
+                {
+                    // Skip invalid combinations
+                    if (s <= 2.0 || e > 0.15) continue;
+
+                    // Use the Q# method's logic to estimate yield
+                    int rawBits = 1000; // Arbitrary number for estimation
+                    int secureKeySize = EstimateKeyYield(s, e, rawBits);
+                    double yield = secureKeySize / (double)rawBits;
+
+                    string key = $"S={s:F2},E={e:P0}";
+                    results[key] = yield;
+                }
+            }
+
+            return results;
+        }
+
+        /// <summary>
+        /// Estimates the key yield based on security parameter and error rate.
+        /// </summary>
+        /// <param name="securityParameter">The security parameter (CHSH value)</param>
+        /// <param name="errorRate">The error rate</param>
+        /// <param name="numRawBits">The number of raw key bits</param>
+        /// <returns>The estimated number of secure key bits that can be extracted</returns>
+        private int EstimateKeyYield(double securityParameter, double errorRate, int numRawBits)
+        {
+            // Security margin: how far above the classical bound (2.0) the security parameter is
+            double securityMargin = securityParameter - 2.0;
+            
+            // Classical bound for CHSH inequality is 2.0
+            // Quantum maximum is 2√2 ≈ 2.83
+            
+            if (securityMargin <= 0.0)
+            {
+                // No secure bits can be generated if we don't exceed the classical bound
+                return 0;
+            }
+
+            double binaryEntropy = BinaryEntropy(errorRate);
+            
+            // Calculate secure key rate r ≈ 1 - H(e) - leakage
+            // where e is the error rate and leakage is potential information leakage
+            
+            // Estimated information leakage (decreases as security parameter increases)
+            double maxDeviation = 0.83;  // 2√2 - 2 ≈ 0.83
+            double leakage = 1.0 - (securityMargin / maxDeviation);
+            double clampedLeakage = Math.Clamp(leakage, 0.0, 1.0);
+            
+            // Calculate secure key rate
+            double rate = 1.0 - binaryEntropy - clampedLeakage;
+            // Ensure non-negative rate
+            double secureRate = Math.Max(0.0, rate);
+            
+            // Calculate estimated secure bits
+            return Math.Max(0, (int)Math.Floor(numRawBits * secureRate));
+        }
+
+        /// <summary>
+        /// The binary entropy function, used in information theory calculations.
+        /// </summary>
+        private double BinaryEntropy(double p)
+        {
+            if (p <= 0.0 || p >= 1.0)
+            {
+                return 0.0;
+            }
+            
+            // h(p) = -p log₂(p) - (1-p) log₂(1-p)
+            double term1 = p == 0 ? 0 : -p * Math.Log2(p);
+            double term2 = (1-p) == 0 ? 0 : -(1-p) * Math.Log2(1-p);
+            
+            return term1 + term2;
+        }
+
+        /// <summary>
+        /// Calculates the security margin percentage based on the security parameter.
+        /// </summary>
+        /// <param name="securityParameter">The security parameter (CHSH value)</param>
+        /// <returns>The security margin as a percentage</returns>
+        public static double CalculateSecurityMargin(double securityParameter)
+        {
+            double classicalLimit = 2.0;
+            double quantumMax = 2.0 * Math.Sqrt(2.0); // ≈ 2.83
+            
+            double margin = securityParameter - classicalLimit;
+            double maxMargin = quantumMax - classicalLimit; // ≈ 0.83
+            
+            // Return as a percentage of the maximum possible quantum advantage
+            return Math.Max(0, Math.Min(100, 100 * margin / maxMargin));
+        }
+
+        /// <summary>
+        /// Estimates the number of entangled pairs needed based on desired key length and parameters.
+        /// </summary>
+        /// <param name="keyLength">Desired final key length in bits</param>
+        /// <param name="securityLevel">Security level (1-5)</param>
+        /// <param name="expectedErrorRate">Expected error rate</param>
+        /// <returns>Estimated number of entangled pairs needed</returns>
+        public static int EstimateRequiredPairs(int keyLength, int securityLevel, double expectedErrorRate)
+        {
+            // Base efficiency - proportion of pairs that contribute to raw key
+            double baseEfficiency = 0.25; // In E91, we expect about 25% of pairs contribute to raw key
+            
+            // Adjust efficiency based on error rate - errors reduce usable bits
+            double errorAdjustment = 1.0 - expectedErrorRate * 2;
+            
+            // Security overhead - more security tests means fewer bits for the key
+            double securityOverhead = 1.0 + (securityLevel - 1) * 0.5;
+            
+            // Privacy amplification reduces final key length
+            double privacyReduction = 0.7; // Typical value - we keep about 70% after privacy amplification
+            
+            // Calculate total efficiency
+            double totalEfficiency = baseEfficiency * errorAdjustment * privacyReduction / securityOverhead;
+            
+            // Calculate required pairs with a safety margin
+            int requiredPairs = (int)Math.Ceiling(keyLength / totalEfficiency * 1.2);
+            
+            return requiredPairs;
+        }
+
+        /// <summary>
+        /// Generates or uses a pre-shared authentication secret.
+        /// </summary>
+        private async Task<IQArray<bool>> GenerateOrUseAuthSecret()
+        {
+            // If a pre-shared secret was provided, use it
+            if (_options.PreSharedSecret != null && _options.PreSharedSecret.Length > 0)
+            {
+                return ByteArrayToQArray(_options.PreSharedSecret);
+            }
+
+            // Otherwise, generate a quantum random secret
+            // The size depends on the authentication mode
+            int secretLength = _options.AuthenticationMode == AuthenticationMode.Enhanced ? 128 : 32;
+            
+            // Generate random bits using quantum random number generation
+            var randomBits = await EntanglementBasedRandomness.Run(_simulator, secretLength);
+            
+            return randomBits;
+        }
+
+        /// <summary>
+        /// Verifies the authenticity of a key using its authentication tag.
+        /// </summary>
+        private async Task<bool> VerifyAuthenticationKey(byte[] key, byte[] tag, IQArray<bool> authSecret)
+        {
+            if (_options.AuthenticationMode == AuthenticationMode.None)
+            {
+                return true; // No authentication needed
+            }
 
             try
             {
-                // Use a smaller key for faster verification
-                var verificationOptions = new QuantumKeyDistributionOptions
-                {
-                    KeyLength = Math.Min(64, options.KeyLength),
-                    ErrorThreshold = options.ErrorThreshold,
-                    SamplePercentage = Math.Max(0.5, options.SamplePercentage), // Use more samples for verification
-                    InitialBits = options.InitialBits,
-                    EnableLogging = options.EnableLogging,
-                    EnhancedSecurity = options.EnhancedSecurity,
-                    UseDecoyStates = options.UseDecoyStates,
-                    UseNoiseProtection = options.UseNoiseProtection
-                };
+                // Convert the key and tag to QArrays
+                var keyBits = ByteArrayToQArray(key);
+                var tagBits = ByteArrayToQArray(tag);
 
-                // Run the protocol without generating a full key
-                var (success, errorRate, _, _) = await EnhancedBB84Protocol.Run(
-                    _simulator,
-                    verificationOptions.KeyLength,
-                    verificationOptions.EnhancedSecurity,
-                    verificationOptions.UseDecoyStates,
-                    verificationOptions.UseNoiseProtection,
-                    false, // No simulated eavesdropping
-                    0,     // Default strategy (not used)
-                    verificationOptions.ErrorThreshold,
-                    _presharedSecret);
-
-                if (options.EnableLogging)
-                {
-                    if (success)
-                    {
-                        Console.WriteLine($"Channel appears secure. Error rate: {errorRate:P2}");
-                    }
-                    else
-                    {
-                        Console.WriteLine($"Channel appears compromised. Error rate: {errorRate:P2}");
-                    }
-                }
-
-                return (success, errorRate);
+                // Call the Q# verification function
+                return await EasyQ.Quantum.Cryptography.VerifyAuthentication.Run(_simulator, keyBits, tagBits, authSecret);
             }
             catch (Exception ex)
             {
-                if (options.EnableLogging)
+                if (_options.EnableLogging)
                 {
-                    Console.WriteLine($"Channel verification failed: {ex.Message}");
+                    Console.WriteLine($"Authentication verification error: {ex.Message}");
                 }
-                return (false, 1.0); // Assume worst case
+                return false;
             }
         }
 
         /// <summary>
-        /// Estimates the number of initial bits needed for a successful key generation.
+        /// Converts an IQArray<bool> to a byte array.
         /// </summary>
-        /// <param name="keyLength">The desired key length in bits.</param>
-        /// <param name="expectedErrorRate">The expected error rate of the quantum channel.</param>
-        /// <param name="enhancedSecurity">Whether enhanced security features are enabled.</param>
-        /// <returns>The recommended number of initial bits.</returns>
-        public static int EstimateRequiredInitialBits(
-            int keyLength, 
-            double expectedErrorRate, 
-            bool enhancedSecurity = true)
+        private byte[] QArrayToBytesArray(IQArray<bool> bits)
         {
-            // Base multiplier - we need more than the key length due to sifting
-            double baseFactor = enhancedSecurity ? 5.0 : 4.0;
+            int byteCount = (bits.Count + 7) / 8;
+            byte[] bytes = new byte[byteCount];
 
-            // Additional factor based on expected error rate
-            double errorFactor = 1.0 / (1.0 - Math.Min(0.9, expectedErrorRate));
-
-            // Calculate and round up to the nearest multiple of 8
-            int estimatedBits = (int)Math.Ceiling(keyLength * baseFactor * errorFactor);
-            return ((estimatedBits + 7) / 8) * 8; // Round up to multiple of 8
-        }
-
-        /// <summary>
-        /// Converts a boolean array to a byte array. Each byte contains 8 bits.
-        /// </summary>
-        /// <param name="bits">The boolean array representing bits.</param>
-        /// <returns>A byte array containing the packed bits.</returns>
-        private static byte[] BoolArrayToByteArray(bool[] bits)
-        {
-            // Calculate the number of bytes needed
-            int numBytes = (bits.Length + 7) / 8;
-            byte[] bytes = new byte[numBytes];
-
-            // Pack bits into bytes
-            for (int i = 0; i < bits.Length; i++)
+            for (int i = 0; i < bits.Count; i++)
             {
                 if (bits[i])
                 {
@@ -468,18 +561,21 @@ namespace EasyQ.Bridge.Cryptography
         }
 
         /// <summary>
-        /// Determines if a specific error rate is acceptable for a secure quantum channel.
+        /// Converts a byte array to an IQArray<bool>.
         /// </summary>
-        /// <param name="errorRate">The measured error rate.</param>
-        /// <param name="enhancedSecurity">Whether enhanced security features are used.</param>
-        /// <returns>True if the error rate is within acceptable limits for a secure channel.</returns>
-        public static bool IsErrorRateAcceptable(double errorRate, bool enhancedSecurity = true)
+        private IQArray<bool> ByteArrayToQArray(byte[] bytes)
         {
-            // For standard BB84, theoretical threshold for detecting eavesdropping is around 11%
-            // For 6-state protocol (enhanced security), the threshold is around 14.6%
-            // We use more conservative thresholds for production systems
-            double maxAcceptableError = enhancedSecurity ? 0.10 : 0.08;
-            return errorRate <= maxAcceptableError;
+            var bits = new bool[bytes.Length * 8];
+
+            for (int i = 0; i < bytes.Length; i++)
+            {
+                for (int j = 0; j < 8; j++)
+                {
+                    bits[i * 8 + j] = ((bytes[i] >> j) & 1) == 1;
+                }
+            }
+
+            return new QArray<bool>(bits);
         }
 
         /// <summary>
@@ -494,7 +590,7 @@ namespace EasyQ.Bridge.Cryptography
         /// <summary>
         /// Disposes the quantum simulator.
         /// </summary>
-        /// <param name="disposing">Whether this is being called from Dispose or the finalizer.</param>
+        /// <param name="disposing">Whether this is being called from Dispose or the finalizer</param>
         protected virtual void Dispose(bool disposing)
         {
             if (!_disposed)
@@ -503,13 +599,13 @@ namespace EasyQ.Bridge.Cryptography
                 {
                     _simulator?.Dispose();
                 }
-
+                
                 _disposed = true;
             }
         }
 
         /// <summary>
-        /// Finalizer.
+        /// Finalizer
         /// </summary>
         ~QuantumKeyDistribution()
         {
