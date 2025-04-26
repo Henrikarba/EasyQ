@@ -1,0 +1,1011 @@
+{
+  "source_base_path": "/home/runner/work/EasyQ/EasyQ/docs",
+  "xrefmap": "xrefmap.yml",
+  "files": [
+    {
+      "type": "Resource",
+      "output": {
+        "resource": {
+          "relative_path": "index.json"
+        }
+      }
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/bridge/EasyQ.Bridge.Cryptography.AuthenticationMode.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/bridge/EasyQ.Bridge.Cryptography.AuthenticationMode.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "EasyQ.Bridge.Cryptography.AuthenticationMode",
+      "Summary": "<p sourcefile=\"api/bridge/EasyQ.Bridge.Cryptography.AuthenticationMode.yml\" sourcestartlinenumber=\"1\">Authentication modes for quantum key distribution.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/bridge/EasyQ.Bridge.Cryptography.KeyDistributionResult.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/bridge/EasyQ.Bridge.Cryptography.KeyDistributionResult.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "EasyQ.Bridge.Cryptography.KeyDistributionResult",
+      "Summary": "<p sourcefile=\"api/bridge/EasyQ.Bridge.Cryptography.KeyDistributionResult.yml\" sourcestartlinenumber=\"1\">Results of a quantum key distribution operation.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/bridge/EasyQ.Bridge.Cryptography.QuantumKeyDistribution.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/bridge/EasyQ.Bridge.Cryptography.QuantumKeyDistribution.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "EasyQ.Bridge.Cryptography.QuantumKeyDistribution",
+      "Summary": "<p sourcefile=\"api/bridge/EasyQ.Bridge.Cryptography.QuantumKeyDistribution.yml\" sourcestartlinenumber=\"1\">Provides a simple API for quantum key distribution, hiding all quantum computing complexity.\nUses the E91 protocol with entanglement-based quantum key distribution.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/bridge/EasyQ.Bridge.Cryptography.QuantumKeyDistributionOptions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/bridge/EasyQ.Bridge.Cryptography.QuantumKeyDistributionOptions.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "EasyQ.Bridge.Cryptography.QuantumKeyDistributionOptions",
+      "Summary": "<p sourcefile=\"api/bridge/EasyQ.Bridge.Cryptography.QuantumKeyDistributionOptions.yml\" sourcestartlinenumber=\"1\">Configuration options for quantum key distribution.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/bridge/EasyQ.Bridge.Cryptography.QuantumRng.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/bridge/EasyQ.Bridge.Cryptography.QuantumRng.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "EasyQ.Bridge.Cryptography.QuantumRng",
+      "Summary": "<p sourcefile=\"api/bridge/EasyQ.Bridge.Cryptography.QuantumRng.yml\" sourcestartlinenumber=\"1\">Provides a simple API for quantum random number generation, hiding all quantum computing complexity.\nUses pure quantum approaches with no classical fallbacks to generate true randomness.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/bridge/EasyQ.Bridge.Cryptography.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/bridge/EasyQ.Bridge.Cryptography.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "EasyQ.Bridge.Cryptography",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/bridge/EasyQ.Bridge.Search.IterationStrategy.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/bridge/EasyQ.Bridge.Search.IterationStrategy.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "EasyQ.Bridge.Search.IterationStrategy",
+      "Summary": "<p sourcefile=\"api/bridge/EasyQ.Bridge.Search.IterationStrategy.yml\" sourcestartlinenumber=\"1\">Strategies for determining the number of Grover iterations.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/bridge/EasyQ.Bridge.Search.QuantumSearch.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/bridge/EasyQ.Bridge.Search.QuantumSearch.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "EasyQ.Bridge.Search.QuantumSearch",
+      "Summary": "<p sourcefile=\"api/bridge/EasyQ.Bridge.Search.QuantumSearch.yml\" sourcestartlinenumber=\"1\">Provides a simple API for quantum search operations, hiding all quantum computing complexity.\nUses pure quantum approaches with no classical fallbacks.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/bridge/EasyQ.Bridge.Search.QuantumSearchOptions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/bridge/EasyQ.Bridge.Search.QuantumSearchOptions.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "EasyQ.Bridge.Search.QuantumSearchOptions",
+      "Summary": "<p sourcefile=\"api/bridge/EasyQ.Bridge.Search.QuantumSearchOptions.yml\" sourcestartlinenumber=\"1\">Configuration options for quantum search operations.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/bridge/EasyQ.Bridge.Search.SamplingStrategy.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/bridge/EasyQ.Bridge.Search.SamplingStrategy.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "EasyQ.Bridge.Search.SamplingStrategy",
+      "Summary": "<p sourcefile=\"api/bridge/EasyQ.Bridge.Search.SamplingStrategy.yml\" sourcestartlinenumber=\"1\">Strategies for estimating the number of matches in the database.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/bridge/EasyQ.Bridge.Search.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/bridge/EasyQ.Bridge.Search.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "EasyQ.Bridge.Search",
+      "Summary": null
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "api/bridge/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/bridge/toc.html"
+        },
+        ".json": {
+          "relative_path": "api/bridge/toc.json"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "api/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "api/index.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/quantum/EasyQ.Quantum.Cryptography.BinaryEntropyCalc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/quantum/EasyQ.Quantum.Cryptography.BinaryEntropyCalc.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "EasyQ.Quantum.Cryptography.BinaryEntropyCalc",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/quantum/EasyQ.Quantum.Cryptography.CalculateErrorRate.In.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/quantum/EasyQ.Quantum.Cryptography.CalculateErrorRate.In.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "EasyQ.Quantum.Cryptography.CalculateErrorRate.In",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/quantum/EasyQ.Quantum.Cryptography.CalculateErrorRate.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/quantum/EasyQ.Quantum.Cryptography.CalculateErrorRate.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "EasyQ.Quantum.Cryptography.CalculateErrorRate",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/quantum/EasyQ.Quantum.Cryptography.CreateEntangledPair.Out.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/quantum/EasyQ.Quantum.Cryptography.CreateEntangledPair.Out.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "EasyQ.Quantum.Cryptography.CreateEntangledPair.Out",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/quantum/EasyQ.Quantum.Cryptography.CreateEntangledPair.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/quantum/EasyQ.Quantum.Cryptography.CreateEntangledPair.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "EasyQ.Quantum.Cryptography.CreateEntangledPair",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/quantum/EasyQ.Quantum.Cryptography.EnhanceKeySecurity.In.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/quantum/EasyQ.Quantum.Cryptography.EnhanceKeySecurity.In.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "EasyQ.Quantum.Cryptography.EnhanceKeySecurity.In",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/quantum/EasyQ.Quantum.Cryptography.EnhanceKeySecurity.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/quantum/EasyQ.Quantum.Cryptography.EnhanceKeySecurity.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "EasyQ.Quantum.Cryptography.EnhanceKeySecurity",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/quantum/EasyQ.Quantum.Cryptography.EntanglementBasedRandomness.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/quantum/EasyQ.Quantum.Cryptography.EntanglementBasedRandomness.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "EasyQ.Quantum.Cryptography.EntanglementBasedRandomness",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/quantum/EasyQ.Quantum.Cryptography.EstimateKeyYield.In.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/quantum/EasyQ.Quantum.Cryptography.EstimateKeyYield.In.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "EasyQ.Quantum.Cryptography.EstimateKeyYield.In",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/quantum/EasyQ.Quantum.Cryptography.EstimateKeyYield.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/quantum/EasyQ.Quantum.Cryptography.EstimateKeyYield.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "EasyQ.Quantum.Cryptography.EstimateKeyYield",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/quantum/EasyQ.Quantum.Cryptography.FilterMeasurementResults.In.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/quantum/EasyQ.Quantum.Cryptography.FilterMeasurementResults.In.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "EasyQ.Quantum.Cryptography.FilterMeasurementResults.In",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/quantum/EasyQ.Quantum.Cryptography.FilterMeasurementResults.Out.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/quantum/EasyQ.Quantum.Cryptography.FilterMeasurementResults.Out.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "EasyQ.Quantum.Cryptography.FilterMeasurementResults.Out",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/quantum/EasyQ.Quantum.Cryptography.FilterMeasurementResults.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/quantum/EasyQ.Quantum.Cryptography.FilterMeasurementResults.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "EasyQ.Quantum.Cryptography.FilterMeasurementResults",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/quantum/EasyQ.Quantum.Cryptography.GenerateAuthenticationCode.In.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/quantum/EasyQ.Quantum.Cryptography.GenerateAuthenticationCode.In.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "EasyQ.Quantum.Cryptography.GenerateAuthenticationCode.In",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/quantum/EasyQ.Quantum.Cryptography.GenerateAuthenticationCode.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/quantum/EasyQ.Quantum.Cryptography.GenerateAuthenticationCode.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "EasyQ.Quantum.Cryptography.GenerateAuthenticationCode",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/quantum/EasyQ.Quantum.Cryptography.GenerateQuantumSecureKey.In.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/quantum/EasyQ.Quantum.Cryptography.GenerateQuantumSecureKey.In.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "EasyQ.Quantum.Cryptography.GenerateQuantumSecureKey.In",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/quantum/EasyQ.Quantum.Cryptography.GenerateQuantumSecureKey.Out.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/quantum/EasyQ.Quantum.Cryptography.GenerateQuantumSecureKey.Out.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "EasyQ.Quantum.Cryptography.GenerateQuantumSecureKey.Out",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/quantum/EasyQ.Quantum.Cryptography.GenerateQuantumSecureKey.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/quantum/EasyQ.Quantum.Cryptography.GenerateQuantumSecureKey.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "EasyQ.Quantum.Cryptography.GenerateQuantumSecureKey",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/quantum/EasyQ.Quantum.Cryptography.GenerateRandomBit.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/quantum/EasyQ.Quantum.Cryptography.GenerateRandomBit.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "EasyQ.Quantum.Cryptography.GenerateRandomBit",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/quantum/EasyQ.Quantum.Cryptography.GenerateRandomBits.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/quantum/EasyQ.Quantum.Cryptography.GenerateRandomBits.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "EasyQ.Quantum.Cryptography.GenerateRandomBits",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/quantum/EasyQ.Quantum.Cryptography.GenerateRandomBytes.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/quantum/EasyQ.Quantum.Cryptography.GenerateRandomBytes.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "EasyQ.Quantum.Cryptography.GenerateRandomBytes",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/quantum/EasyQ.Quantum.Cryptography.GenerateRandomInt.In.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/quantum/EasyQ.Quantum.Cryptography.GenerateRandomInt.In.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "EasyQ.Quantum.Cryptography.GenerateRandomInt.In",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/quantum/EasyQ.Quantum.Cryptography.GenerateRandomInt.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/quantum/EasyQ.Quantum.Cryptography.GenerateRandomInt.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "EasyQ.Quantum.Cryptography.GenerateRandomInt",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/quantum/EasyQ.Quantum.Cryptography.GenerateRandomPermutation.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/quantum/EasyQ.Quantum.Cryptography.GenerateRandomPermutation.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "EasyQ.Quantum.Cryptography.GenerateRandomPermutation",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/quantum/EasyQ.Quantum.Cryptography.GetMeasurementAngle.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/quantum/EasyQ.Quantum.Cryptography.GetMeasurementAngle.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "EasyQ.Quantum.Cryptography.GetMeasurementAngle",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/quantum/EasyQ.Quantum.Cryptography.MeasureInBasis.In.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/quantum/EasyQ.Quantum.Cryptography.MeasureInBasis.In.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "EasyQ.Quantum.Cryptography.MeasureInBasis.In",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/quantum/EasyQ.Quantum.Cryptography.MeasureInBasis.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/quantum/EasyQ.Quantum.Cryptography.MeasureInBasis.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "EasyQ.Quantum.Cryptography.MeasureInBasis",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/quantum/EasyQ.Quantum.Cryptography.PerformErrorCorrection.In.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/quantum/EasyQ.Quantum.Cryptography.PerformErrorCorrection.In.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "EasyQ.Quantum.Cryptography.PerformErrorCorrection.In",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/quantum/EasyQ.Quantum.Cryptography.PerformErrorCorrection.Out.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/quantum/EasyQ.Quantum.Cryptography.PerformErrorCorrection.Out.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "EasyQ.Quantum.Cryptography.PerformErrorCorrection.Out",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/quantum/EasyQ.Quantum.Cryptography.PerformErrorCorrection.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/quantum/EasyQ.Quantum.Cryptography.PerformErrorCorrection.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "EasyQ.Quantum.Cryptography.PerformErrorCorrection",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/quantum/EasyQ.Quantum.Cryptography.PerformQuantumExchange.In.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/quantum/EasyQ.Quantum.Cryptography.PerformQuantumExchange.In.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "EasyQ.Quantum.Cryptography.PerformQuantumExchange.In",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/quantum/EasyQ.Quantum.Cryptography.PerformQuantumExchange.Out.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/quantum/EasyQ.Quantum.Cryptography.PerformQuantumExchange.Out.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "EasyQ.Quantum.Cryptography.PerformQuantumExchange.Out",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/quantum/EasyQ.Quantum.Cryptography.PerformQuantumExchange.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/quantum/EasyQ.Quantum.Cryptography.PerformQuantumExchange.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "EasyQ.Quantum.Cryptography.PerformQuantumExchange",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/quantum/EasyQ.Quantum.Cryptography.QuantumRandomOracle.In.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/quantum/EasyQ.Quantum.Cryptography.QuantumRandomOracle.In.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "EasyQ.Quantum.Cryptography.QuantumRandomOracle.In",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/quantum/EasyQ.Quantum.Cryptography.QuantumRandomOracle.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/quantum/EasyQ.Quantum.Cryptography.QuantumRandomOracle.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "EasyQ.Quantum.Cryptography.QuantumRandomOracle",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/quantum/EasyQ.Quantum.Cryptography.VerifyAuthentication.In.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/quantum/EasyQ.Quantum.Cryptography.VerifyAuthentication.In.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "EasyQ.Quantum.Cryptography.VerifyAuthentication.In",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/quantum/EasyQ.Quantum.Cryptography.VerifyAuthentication.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/quantum/EasyQ.Quantum.Cryptography.VerifyAuthentication.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "EasyQ.Quantum.Cryptography.VerifyAuthentication",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/quantum/EasyQ.Quantum.Cryptography.VerifyChannelSecurity.In.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/quantum/EasyQ.Quantum.Cryptography.VerifyChannelSecurity.In.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "EasyQ.Quantum.Cryptography.VerifyChannelSecurity.In",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/quantum/EasyQ.Quantum.Cryptography.VerifyChannelSecurity.Out.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/quantum/EasyQ.Quantum.Cryptography.VerifyChannelSecurity.Out.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "EasyQ.Quantum.Cryptography.VerifyChannelSecurity.Out",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/quantum/EasyQ.Quantum.Cryptography.VerifyChannelSecurity.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/quantum/EasyQ.Quantum.Cryptography.VerifyChannelSecurity.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "EasyQ.Quantum.Cryptography.VerifyChannelSecurity",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/quantum/EasyQ.Quantum.Cryptography.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/quantum/EasyQ.Quantum.Cryptography.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "EasyQ.Quantum.Cryptography",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/quantum/EasyQ.Quantum.Search.ApplyGroverDiffusionOperator.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/quantum/EasyQ.Quantum.Search.ApplyGroverDiffusionOperator.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "EasyQ.Quantum.Search.ApplyGroverDiffusionOperator",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/quantum/EasyQ.Quantum.Search.ApplyPauliFlipToMatchTarget.In.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/quantum/EasyQ.Quantum.Search.ApplyPauliFlipToMatchTarget.In.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "EasyQ.Quantum.Search.ApplyPauliFlipToMatchTarget.In",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/quantum/EasyQ.Quantum.Search.ApplyPauliFlipToMatchTarget.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/quantum/EasyQ.Quantum.Search.ApplyPauliFlipToMatchTarget.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "EasyQ.Quantum.Search.ApplyPauliFlipToMatchTarget",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/quantum/EasyQ.Quantum.Search.CalculateOptimalIterations.In.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/quantum/EasyQ.Quantum.Search.CalculateOptimalIterations.In.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "EasyQ.Quantum.Search.CalculateOptimalIterations.In",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/quantum/EasyQ.Quantum.Search.CalculateOptimalIterations.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/quantum/EasyQ.Quantum.Search.CalculateOptimalIterations.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "EasyQ.Quantum.Search.CalculateOptimalIterations",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/quantum/EasyQ.Quantum.Search.CreateOracleForItem.In.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/quantum/EasyQ.Quantum.Search.CreateOracleForItem.In.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "EasyQ.Quantum.Search.CreateOracleForItem.In",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/quantum/EasyQ.Quantum.Search.CreateOracleForItem.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/quantum/EasyQ.Quantum.Search.CreateOracleForItem.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "EasyQ.Quantum.Search.CreateOracleForItem",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/quantum/EasyQ.Quantum.Search.GroverSearch.In.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/quantum/EasyQ.Quantum.Search.GroverSearch.In.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "EasyQ.Quantum.Search.GroverSearch.In",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/quantum/EasyQ.Quantum.Search.GroverSearch.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/quantum/EasyQ.Quantum.Search.GroverSearch.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "EasyQ.Quantum.Search.GroverSearch",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/quantum/EasyQ.Quantum.Search.MeasureAllQubits.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/quantum/EasyQ.Quantum.Search.MeasureAllQubits.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "EasyQ.Quantum.Search.MeasureAllQubits",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/quantum/EasyQ.Quantum.Search.Oracle.In.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/quantum/EasyQ.Quantum.Search.Oracle.In.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "EasyQ.Quantum.Search.Oracle.In",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/quantum/EasyQ.Quantum.Search.Oracle.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/quantum/EasyQ.Quantum.Search.Oracle.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "EasyQ.Quantum.Search.Oracle",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/quantum/EasyQ.Quantum.Search.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/quantum/EasyQ.Quantum.Search.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "EasyQ.Quantum.Search",
+      "Summary": null
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "api/quantum/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/quantum/toc.html"
+        },
+        ".json": {
+          "relative_path": "api/quantum/toc.json"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/intro.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/intro.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "articles/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "articles/toc.html"
+        },
+        ".json": {
+          "relative_path": "articles/toc.json"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "index.md",
+      "output": {
+        ".html": {
+          "relative_path": "index.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "toc.html"
+        },
+        ".json": {
+          "relative_path": "toc.json"
+        }
+      },
+      "version": ""
+    }
+  ],
+  "groups": [
+    {
+      "xrefmap": "xrefmap.yml"
+    }
+  ]
+}

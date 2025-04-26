@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+
+  <head>
+    <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+      <title>Class GenerateQuantumSecureKey </title>
+      <meta name="viewport" content="width=device-width">
+      <meta name="title" content="Class GenerateQuantumSecureKey ">
+    
+    
+      <link rel="shortcut icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../styles/docfx.vendor.min.css">
+      <link rel="stylesheet" href="../../styles/docfx.css">
+      <link rel="stylesheet" href="../../styles/main.css">
+      <meta property="docfx:navrel" content="../../toc.html">
+      <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+
+              <a class="navbar-brand" href="../../index.html">
+                <img id="logo" class="svg" src="../../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+
+        <div id="search-results">
+          <div class="search-list">Search Results for <span></span></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination" data-first=First data-prev=Previous data-next=Next data-last=Last></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-12">
+            <article class="content wrap" id="_content" data-uid="EasyQ.Quantum.Cryptography.GenerateQuantumSecureKey">
+
+
+
+  <h1 id="EasyQ_Quantum_Cryptography_GenerateQuantumSecureKey" data-uid="EasyQ.Quantum.Cryptography.GenerateQuantumSecureKey" class="text-break">Class GenerateQuantumSecureKey</h1>
+  <div class="markdown level0 summary"></div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
+    <div class="level1"><a class="xref" href="https://github.com/microsoft/qsharp-runtime/blob/main/src/Simulation/Core/AbstractCallable.cs">AbstractCallable</a></div>
+    <div class="level2"><a class="xref" href="https://github.com/microsoft/qsharp-runtime/blob/main/src/Simulation/Core/Operations/Operation.cs">Operation</a>&lt;(<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int64">long</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int64">long</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a>, <a class="xref" href="https://github.com/microsoft/qsharp-runtime/blob/main/src/Simulation/Core/QArray.cs">IQArray</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>&gt;), (<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a>, <a class="xref" href="https://github.com/microsoft/qsharp-runtime/blob/main/src/Simulation/Core/QArray.cs">IQArray</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>&gt;, <a class="xref" href="https://github.com/microsoft/qsharp-runtime/blob/main/src/Simulation/Core/QArray.cs">IQArray</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>&gt;)&gt;</div>
+    <div class="level3"><span class="xref">GenerateQuantumSecureKey</span></div>
+  </div>
+  <div class="implements">
+    <h5>Implements</h5>
+    <div><a class="xref" href="https://github.com/microsoft/qsharp-runtime/blob/main/src/Simulation/Core/Operations/Operation.cs">ICallable</a>&lt;(<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int64">long</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int64">long</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a>, <a class="xref" href="https://github.com/microsoft/qsharp-runtime/blob/main/src/Simulation/Core/QArray.cs">IQArray</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>&gt;), (<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a>, <a class="xref" href="https://github.com/microsoft/qsharp-runtime/blob/main/src/Simulation/Core/QArray.cs">IQArray</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>&gt;, <a class="xref" href="https://github.com/microsoft/qsharp-runtime/blob/main/src/Simulation/Core/QArray.cs">IQArray</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>&gt;)&gt;</div>
+    <div><a class="xref" href="https://github.com/microsoft/qsharp-runtime/blob/main/src/Simulation/Core/Generics/GenericCallable.cs">ICallable</a></div>
+    <div><a class="xref" href="https://github.com/microsoft/qsharp-runtime/blob/main/src/Simulation/Core/IData.cs">IApplyData</a></div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="https://github.com/microsoft/qsharp-runtime/blob/main/src/Simulation/Core/Operations/Operation.cs">Operation&lt;(long, long, double, IQArray&lt;bool&gt;), (bool, double, double, IQArray&lt;bool&gt;, IQArray&lt;bool&gt;)&gt;.__DataIn__((long, long, double, IQArray&lt;bool&gt;))</a>
+    </div>
+    <div>
+      <a class="xref" href="https://github.com/microsoft/qsharp-runtime/blob/main/src/Simulation/Core/Operations/Operation.cs">Operation&lt;(long, long, double, IQArray&lt;bool&gt;), (bool, double, double, IQArray&lt;bool&gt;, IQArray&lt;bool&gt;)&gt;.__DataOut__((bool, double, double, IQArray&lt;bool&gt;, IQArray&lt;bool&gt;))</a>
+    </div>
+    <div>
+      <a class="xref" href="https://github.com/microsoft/qsharp-runtime/blob/main/src/Simulation/Core/Operations/Operation.cs">Operation&lt;(long, long, double, IQArray&lt;bool&gt;), (bool, double, double, IQArray&lt;bool&gt;, IQArray&lt;bool&gt;)&gt;.GetRuntimeMetadata(IApplyData)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://github.com/microsoft/qsharp-runtime/blob/main/src/Simulation/Core/Operations/Operation.cs">Operation&lt;(long, long, double, IQArray&lt;bool&gt;), (bool, double, double, IQArray&lt;bool&gt;, IQArray&lt;bool&gt;)&gt;.Apply((long, long, double, IQArray&lt;bool&gt;))</a>
+    </div>
+    <div>
+      <a class="xref" href="https://github.com/microsoft/qsharp-runtime/blob/main/src/Simulation/Core/Operations/Operation.cs">Operation&lt;(long, long, double, IQArray&lt;bool&gt;), (bool, double, double, IQArray&lt;bool&gt;, IQArray&lt;bool&gt;)&gt;.Partial&lt;T&gt;(object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://github.com/microsoft/qsharp-runtime/blob/main/src/Simulation/Core/Operations/Operation.cs">Operation&lt;(long, long, double, IQArray&lt;bool&gt;), (bool, double, double, IQArray&lt;bool&gt;, IQArray&lt;bool&gt;)&gt;.Partial&lt;P&gt;(Func&lt;P, (long, long, double, IQArray&lt;bool&gt;)&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://github.com/microsoft/qsharp-runtime/blob/main/src/Simulation/Core/Operations/Operation.cs">Operation&lt;(long, long, double, IQArray&lt;bool&gt;), (bool, double, double, IQArray&lt;bool&gt;, IQArray&lt;bool&gt;)&gt;.Apply&lt;GenO&gt;(object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://github.com/microsoft/qsharp-runtime/blob/main/src/Simulation/Core/Operations/Operation.cs">Operation&lt;(long, long, double, IQArray&lt;bool&gt;), (bool, double, double, IQArray&lt;bool&gt;, IQArray&lt;bool&gt;)&gt;.FindPartialType(Type, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://github.com/microsoft/qsharp-runtime/blob/main/src/Simulation/Core/Operations/Operation.cs">Operation&lt;(long, long, double, IQArray&lt;bool&gt;), (bool, double, double, IQArray&lt;bool&gt;, IQArray&lt;bool&gt;)&gt;.ToString()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://github.com/microsoft/qsharp-runtime/blob/main/src/Simulation/Core/Operations/Operation.cs">Operation&lt;(long, long, double, IQArray&lt;bool&gt;), (bool, double, double, IQArray&lt;bool&gt;, IQArray&lt;bool&gt;)&gt;.__qsharpType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://github.com/microsoft/qsharp-runtime/blob/main/src/Simulation/Core/Operations/Operation.cs">Operation&lt;(long, long, double, IQArray&lt;bool&gt;), (bool, double, double, IQArray&lt;bool&gt;, IQArray&lt;bool&gt;)&gt;.__Body__</a>
+    </div>
+    <div>
+      <a class="xref" href="https://github.com/microsoft/qsharp-runtime/blob/main/src/Simulation/Core/Operations/Operation.cs">Operation&lt;(long, long, double, IQArray&lt;bool&gt;), (bool, double, double, IQArray&lt;bool&gt;, IQArray&lt;bool&gt;)&gt;.__AdjointBody__</a>
+    </div>
+    <div>
+      <a class="xref" href="https://github.com/microsoft/qsharp-runtime/blob/main/src/Simulation/Core/Operations/Operation.cs">Operation&lt;(long, long, double, IQArray&lt;bool&gt;), (bool, double, double, IQArray&lt;bool&gt;, IQArray&lt;bool&gt;)&gt;.__ControlledBody__</a>
+    </div>
+    <div>
+      <a class="xref" href="https://github.com/microsoft/qsharp-runtime/blob/main/src/Simulation/Core/Operations/Operation.cs">Operation&lt;(long, long, double, IQArray&lt;bool&gt;), (bool, double, double, IQArray&lt;bool&gt;, IQArray&lt;bool&gt;)&gt;.__ControlledAdjointBody__</a>
+    </div>
+    <div>
+      <a class="xref" href="https://github.com/microsoft/qsharp-runtime/blob/main/src/Simulation/Core/Operations/Operation.cs">Operation&lt;(long, long, double, IQArray&lt;bool&gt;), (bool, double, double, IQArray&lt;bool&gt;, IQArray&lt;bool&gt;)&gt;.Adjoint</a>
+    </div>
+    <div>
+      <a class="xref" href="https://github.com/microsoft/qsharp-runtime/blob/main/src/Simulation/Core/Operations/Operation.cs">Operation&lt;(long, long, double, IQArray&lt;bool&gt;), (bool, double, double, IQArray&lt;bool&gt;, IQArray&lt;bool&gt;)&gt;.Controlled</a>
+    </div>
+    <div>
+      <a class="xref" href="https://github.com/microsoft/qsharp-runtime/blob/main/src/Simulation/Core/AbstractCallable.cs">AbstractCallable._</a>
+    </div>
+    <div>
+      <a class="xref" href="https://github.com/microsoft/qsharp-runtime/blob/main/src/Simulation/Core/AbstractCallable.cs">AbstractCallable.GetRuntimeMetadata(IApplyData)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://github.com/microsoft/qsharp-runtime/blob/main/src/Simulation/Core/AbstractCallable.cs">AbstractCallable.__Factory__</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">object.Equals(object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">object.Equals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gethashcode">object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gettype">object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone">object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.referenceequals">object.ReferenceEquals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.tostring">object.ToString()</a>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="EasyQ.html">EasyQ</a>.<a class="xref" href="EasyQ.Quantum.html">Quantum</a>.<a class="xref" href="EasyQ.Quantum.Cryptography.html">Cryptography</a></h6>
+  <h6><strong>Assembly</strong>: EasyQ.Quantum.dll</h6>
+  <h5 id="EasyQ_Quantum_Cryptography_GenerateQuantumSecureKey_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[SourceLocation(&quot;/home/runner/work/EasyQ/EasyQ/src/Quantum/Cryptography/KeyDistribution.qs&quot;, OperationFunctor.Body, 489, 567)]
+public class GenerateQuantumSecureKey : Operation&lt;(long, long, double, IQArray&lt;bool&gt;), (bool, double, double, IQArray&lt;bool&gt;, IQArray&lt;bool&gt;)&gt;, ICallable&lt;(long, long, double, IQArray&lt;bool&gt;), (bool, double, double, IQArray&lt;bool&gt;, IQArray&lt;bool&gt;)&gt;, ICallable, IApplyData</code></pre>
+  </div>
+  <h3 id="constructors">Constructors
+</h3>
+  <a id="EasyQ_Quantum_Cryptography_GenerateQuantumSecureKey__ctor_" data-uid="EasyQ.Quantum.Cryptography.GenerateQuantumSecureKey.#ctor*"></a>
+  <h4 id="EasyQ_Quantum_Cryptography_GenerateQuantumSecureKey__ctor_Microsoft_Quantum_Simulation_Core_IOperationFactory_" data-uid="EasyQ.Quantum.Cryptography.GenerateQuantumSecureKey.#ctor(Microsoft.Quantum.Simulation.Core.IOperationFactory)">GenerateQuantumSecureKey(IOperationFactory)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public GenerateQuantumSecureKey(IOperationFactory m)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://github.com/microsoft/qsharp-runtime/blob/main/src/Simulation/Core/IOperationFactory.cs">IOperationFactory</a></td>
+        <td><span class="parametername">m</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="properties">Properties
+</h3>
+  <a id="EasyQ_Quantum_Cryptography_GenerateQuantumSecureKey_CalculateErrorRate___" data-uid="EasyQ.Quantum.Cryptography.GenerateQuantumSecureKey.CalculateErrorRate__*"></a>
+  <h4 id="EasyQ_Quantum_Cryptography_GenerateQuantumSecureKey_CalculateErrorRate__" data-uid="EasyQ.Quantum.Cryptography.GenerateQuantumSecureKey.CalculateErrorRate__">CalculateErrorRate__</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected ICallable&lt;(IQArray&lt;bool&gt;, IQArray&lt;bool&gt;), double&gt; CalculateErrorRate__ { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://github.com/microsoft/qsharp-runtime/blob/main/src/Simulation/Core/Operations/Operation.cs">ICallable</a>&lt;(<a class="xref" href="https://github.com/microsoft/qsharp-runtime/blob/main/src/Simulation/Core/QArray.cs">IQArray</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>&gt;, <a class="xref" href="https://github.com/microsoft/qsharp-runtime/blob/main/src/Simulation/Core/QArray.cs">IQArray</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>&gt;), <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="EasyQ_Quantum_Cryptography_GenerateQuantumSecureKey_EnhanceKeySecurity___" data-uid="EasyQ.Quantum.Cryptography.GenerateQuantumSecureKey.EnhanceKeySecurity__*"></a>
+  <h4 id="EasyQ_Quantum_Cryptography_GenerateQuantumSecureKey_EnhanceKeySecurity__" data-uid="EasyQ.Quantum.Cryptography.GenerateQuantumSecureKey.EnhanceKeySecurity__">EnhanceKeySecurity__</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected ICallable&lt;(IQArray&lt;bool&gt;, long, long, double), IQArray&lt;bool&gt;&gt; EnhanceKeySecurity__ { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://github.com/microsoft/qsharp-runtime/blob/main/src/Simulation/Core/Operations/Operation.cs">ICallable</a>&lt;(<a class="xref" href="https://github.com/microsoft/qsharp-runtime/blob/main/src/Simulation/Core/QArray.cs">IQArray</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>&gt;, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int64">long</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int64">long</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a>), <a class="xref" href="https://github.com/microsoft/qsharp-runtime/blob/main/src/Simulation/Core/QArray.cs">IQArray</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>&gt;&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="EasyQ_Quantum_Cryptography_GenerateQuantumSecureKey_FilterMeasurementResults___" data-uid="EasyQ.Quantum.Cryptography.GenerateQuantumSecureKey.FilterMeasurementResults__*"></a>
+  <h4 id="EasyQ_Quantum_Cryptography_GenerateQuantumSecureKey_FilterMeasurementResults__" data-uid="EasyQ.Quantum.Cryptography.GenerateQuantumSecureKey.FilterMeasurementResults__">FilterMeasurementResults__</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected ICallable&lt;(IQArray&lt;long&gt;, IQArray&lt;long&gt;, IQArray&lt;bool&gt;, IQArray&lt;bool&gt;), (IQArray&lt;bool&gt;, IQArray&lt;bool&gt;, IQArray&lt;(long, long, bool, bool)&gt;)&gt; FilterMeasurementResults__ { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://github.com/microsoft/qsharp-runtime/blob/main/src/Simulation/Core/Operations/Operation.cs">ICallable</a>&lt;(<a class="xref" href="https://github.com/microsoft/qsharp-runtime/blob/main/src/Simulation/Core/QArray.cs">IQArray</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int64">long</a>&gt;, <a class="xref" href="https://github.com/microsoft/qsharp-runtime/blob/main/src/Simulation/Core/QArray.cs">IQArray</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int64">long</a>&gt;, <a class="xref" href="https://github.com/microsoft/qsharp-runtime/blob/main/src/Simulation/Core/QArray.cs">IQArray</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>&gt;, <a class="xref" href="https://github.com/microsoft/qsharp-runtime/blob/main/src/Simulation/Core/QArray.cs">IQArray</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>&gt;), (<a class="xref" href="https://github.com/microsoft/qsharp-runtime/blob/main/src/Simulation/Core/QArray.cs">IQArray</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>&gt;, <a class="xref" href="https://github.com/microsoft/qsharp-runtime/blob/main/src/Simulation/Core/QArray.cs">IQArray</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>&gt;, <a class="xref" href="https://github.com/microsoft/qsharp-runtime/blob/main/src/Simulation/Core/QArray.cs">IQArray</a>&lt;(<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int64">long</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int64">long</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>)&gt;)&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="EasyQ_Quantum_Cryptography_GenerateQuantumSecureKey_GenerateAuthenticationCode___" data-uid="EasyQ.Quantum.Cryptography.GenerateQuantumSecureKey.GenerateAuthenticationCode__*"></a>
+  <h4 id="EasyQ_Quantum_Cryptography_GenerateQuantumSecureKey_GenerateAuthenticationCode__" data-uid="EasyQ.Quantum.Cryptography.GenerateQuantumSecureKey.GenerateAuthenticationCode__">GenerateAuthenticationCode__</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected ICallable&lt;(IQArray&lt;bool&gt;, IQArray&lt;bool&gt;), IQArray&lt;bool&gt;&gt; GenerateAuthenticationCode__ { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://github.com/microsoft/qsharp-runtime/blob/main/src/Simulation/Core/Operations/Operation.cs">ICallable</a>&lt;(<a class="xref" href="https://github.com/microsoft/qsharp-runtime/blob/main/src/Simulation/Core/QArray.cs">IQArray</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>&gt;, <a class="xref" href="https://github.com/microsoft/qsharp-runtime/blob/main/src/Simulation/Core/QArray.cs">IQArray</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>&gt;), <a class="xref" href="https://github.com/microsoft/qsharp-runtime/blob/main/src/Simulation/Core/QArray.cs">IQArray</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>&gt;&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="EasyQ_Quantum_Cryptography_GenerateQuantumSecureKey_GenerateRandomInt___" data-uid="EasyQ.Quantum.Cryptography.GenerateQuantumSecureKey.GenerateRandomInt__*"></a>
+  <h4 id="EasyQ_Quantum_Cryptography_GenerateQuantumSecureKey_GenerateRandomInt__" data-uid="EasyQ.Quantum.Cryptography.GenerateQuantumSecureKey.GenerateRandomInt__">GenerateRandomInt__</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected ICallable&lt;(long, long), long&gt; GenerateRandomInt__ { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://github.com/microsoft/qsharp-runtime/blob/main/src/Simulation/Core/Operations/Operation.cs">ICallable</a>&lt;(<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int64">long</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int64">long</a>), <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int64">long</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="EasyQ_Quantum_Cryptography_GenerateQuantumSecureKey_Length___" data-uid="EasyQ.Quantum.Cryptography.GenerateQuantumSecureKey.Length__*"></a>
+  <h4 id="EasyQ_Quantum_Cryptography_GenerateQuantumSecureKey_Length__" data-uid="EasyQ.Quantum.Cryptography.GenerateQuantumSecureKey.Length__">Length__</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected ICallable Length__ { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://github.com/microsoft/qsharp-runtime/blob/main/src/Simulation/Core/Generics/GenericCallable.cs">ICallable</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="EasyQ_Quantum_Cryptography_GenerateQuantumSecureKey_Microsoft__Quantum__Math__Max_" data-uid="EasyQ.Quantum.Cryptography.GenerateQuantumSecureKey.Microsoft__Quantum__Math__Max*"></a>
+  <h4 id="EasyQ_Quantum_Cryptography_GenerateQuantumSecureKey_Microsoft__Quantum__Math__Max" data-uid="EasyQ.Quantum.Cryptography.GenerateQuantumSecureKey.Microsoft__Quantum__Math__Max">Microsoft__Quantum__Math__Max</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected ICallable&lt;IQArray&lt;long&gt;, long&gt; Microsoft__Quantum__Math__Max { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://github.com/microsoft/qsharp-runtime/blob/main/src/Simulation/Core/Operations/Operation.cs">ICallable</a>&lt;<a class="xref" href="https://github.com/microsoft/qsharp-runtime/blob/main/src/Simulation/Core/QArray.cs">IQArray</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int64">long</a>&gt;, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int64">long</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="EasyQ_Quantum_Cryptography_GenerateQuantumSecureKey_Microsoft__Quantum__Math__Min_" data-uid="EasyQ.Quantum.Cryptography.GenerateQuantumSecureKey.Microsoft__Quantum__Math__Min*"></a>
+  <h4 id="EasyQ_Quantum_Cryptography_GenerateQuantumSecureKey_Microsoft__Quantum__Math__Min" data-uid="EasyQ.Quantum.Cryptography.GenerateQuantumSecureKey.Microsoft__Quantum__Math__Min">Microsoft__Quantum__Math__Min</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected ICallable&lt;IQArray&lt;long&gt;, long&gt; Microsoft__Quantum__Math__Min { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://github.com/microsoft/qsharp-runtime/blob/main/src/Simulation/Core/Operations/Operation.cs">ICallable</a>&lt;<a class="xref" href="https://github.com/microsoft/qsharp-runtime/blob/main/src/Simulation/Core/QArray.cs">IQArray</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int64">long</a>&gt;, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int64">long</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="EasyQ_Quantum_Cryptography_GenerateQuantumSecureKey_PerformErrorCorrection___" data-uid="EasyQ.Quantum.Cryptography.GenerateQuantumSecureKey.PerformErrorCorrection__*"></a>
+  <h4 id="EasyQ_Quantum_Cryptography_GenerateQuantumSecureKey_PerformErrorCorrection__" data-uid="EasyQ.Quantum.Cryptography.GenerateQuantumSecureKey.PerformErrorCorrection__">PerformErrorCorrection__</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected ICallable&lt;(IQArray&lt;bool&gt;, IQArray&lt;bool&gt;, double), (IQArray&lt;bool&gt;, long)&gt; PerformErrorCorrection__ { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://github.com/microsoft/qsharp-runtime/blob/main/src/Simulation/Core/Operations/Operation.cs">ICallable</a>&lt;(<a class="xref" href="https://github.com/microsoft/qsharp-runtime/blob/main/src/Simulation/Core/QArray.cs">IQArray</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>&gt;, <a class="xref" href="https://github.com/microsoft/qsharp-runtime/blob/main/src/Simulation/Core/QArray.cs">IQArray</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>&gt;, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a>), (<a class="xref" href="https://github.com/microsoft/qsharp-runtime/blob/main/src/Simulation/Core/QArray.cs">IQArray</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>&gt;, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int64">long</a>)&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="EasyQ_Quantum_Cryptography_GenerateQuantumSecureKey_PerformQuantumExchange___" data-uid="EasyQ.Quantum.Cryptography.GenerateQuantumSecureKey.PerformQuantumExchange__*"></a>
+  <h4 id="EasyQ_Quantum_Cryptography_GenerateQuantumSecureKey_PerformQuantumExchange__" data-uid="EasyQ.Quantum.Cryptography.GenerateQuantumSecureKey.PerformQuantumExchange__">PerformQuantumExchange__</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected ICallable&lt;(long, long), (IQArray&lt;long&gt;, IQArray&lt;long&gt;, IQArray&lt;bool&gt;, IQArray&lt;bool&gt;)&gt; PerformQuantumExchange__ { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://github.com/microsoft/qsharp-runtime/blob/main/src/Simulation/Core/Operations/Operation.cs">ICallable</a>&lt;(<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int64">long</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int64">long</a>), (<a class="xref" href="https://github.com/microsoft/qsharp-runtime/blob/main/src/Simulation/Core/QArray.cs">IQArray</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int64">long</a>&gt;, <a class="xref" href="https://github.com/microsoft/qsharp-runtime/blob/main/src/Simulation/Core/QArray.cs">IQArray</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int64">long</a>&gt;, <a class="xref" href="https://github.com/microsoft/qsharp-runtime/blob/main/src/Simulation/Core/QArray.cs">IQArray</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>&gt;, <a class="xref" href="https://github.com/microsoft/qsharp-runtime/blob/main/src/Simulation/Core/QArray.cs">IQArray</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>&gt;)&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="EasyQ_Quantum_Cryptography_GenerateQuantumSecureKey_VerifyChannelSecurity___" data-uid="EasyQ.Quantum.Cryptography.GenerateQuantumSecureKey.VerifyChannelSecurity__*"></a>
+  <h4 id="EasyQ_Quantum_Cryptography_GenerateQuantumSecureKey_VerifyChannelSecurity__" data-uid="EasyQ.Quantum.Cryptography.GenerateQuantumSecureKey.VerifyChannelSecurity__">VerifyChannelSecurity__</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected ICallable&lt;(IQArray&lt;(long, long, bool, bool)&gt;, double), (bool, double)&gt; VerifyChannelSecurity__ { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://github.com/microsoft/qsharp-runtime/blob/main/src/Simulation/Core/Operations/Operation.cs">ICallable</a>&lt;(<a class="xref" href="https://github.com/microsoft/qsharp-runtime/blob/main/src/Simulation/Core/QArray.cs">IQArray</a>&lt;(<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int64">long</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int64">long</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>)&gt;, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a>), (<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a>)&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="EasyQ_Quantum_Cryptography_GenerateQuantumSecureKey___Body___" data-uid="EasyQ.Quantum.Cryptography.GenerateQuantumSecureKey.__Body__*"></a>
+  <h4 id="EasyQ_Quantum_Cryptography_GenerateQuantumSecureKey___Body__" data-uid="EasyQ.Quantum.Cryptography.GenerateQuantumSecureKey.__Body__">__Body__</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override Func&lt;(long, long, double, IQArray&lt;bool&gt;), (bool, double, double, IQArray&lt;bool&gt;, IQArray&lt;bool&gt;)&gt; __Body__ { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.func-2">Func</a>&lt;(<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int64">long</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int64">long</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a>, <a class="xref" href="https://github.com/microsoft/qsharp-runtime/blob/main/src/Simulation/Core/QArray.cs">IQArray</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>&gt;), (<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a>, <a class="xref" href="https://github.com/microsoft/qsharp-runtime/blob/main/src/Simulation/Core/QArray.cs">IQArray</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>&gt;, <a class="xref" href="https://github.com/microsoft/qsharp-runtime/blob/main/src/Simulation/Core/QArray.cs">IQArray</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>&gt;)&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="https://github.com/microsoft/qsharp-runtime/blob/main/src/Simulation/Core/Operations/Operation.cs">Operation&lt;(long, long, double, IQArray&lt;bool&gt;), (bool, double, double, IQArray&lt;bool&gt;, IQArray&lt;bool&gt;)&gt;.__Body__</a></div>
+  <h3 id="methods">Methods
+</h3>
+  <a id="EasyQ_Quantum_Cryptography_GenerateQuantumSecureKey_Run_" data-uid="EasyQ.Quantum.Cryptography.GenerateQuantumSecureKey.Run*"></a>
+  <h4 id="EasyQ_Quantum_Cryptography_GenerateQuantumSecureKey_Run_Microsoft_Quantum_Simulation_Core_IOperationFactory_System_Int64_System_Int64_System_Double_Microsoft_Quantum_Simulation_Core_IQArray_System_Boolean__" data-uid="EasyQ.Quantum.Cryptography.GenerateQuantumSecureKey.Run(Microsoft.Quantum.Simulation.Core.IOperationFactory,System.Int64,System.Int64,System.Double,Microsoft.Quantum.Simulation.Core.IQArray{System.Boolean})">Run(IOperationFactory, long, long, double, IQArray&lt;bool&gt;)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Task&lt;(bool, double, double, IQArray&lt;bool&gt;, IQArray&lt;bool&gt;)&gt; Run(IOperationFactory __m__, long keyLength, long securityLevel, double securityThreshold, IQArray&lt;bool&gt; authSecret)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://github.com/microsoft/qsharp-runtime/blob/main/src/Simulation/Core/IOperationFactory.cs">IOperationFactory</a></td>
+        <td><span class="parametername">__m__</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int64">long</a></td>
+        <td><span class="parametername">keyLength</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int64">long</a></td>
+        <td><span class="parametername">securityLevel</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a></td>
+        <td><span class="parametername">securityThreshold</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://github.com/microsoft/qsharp-runtime/blob/main/src/Simulation/Core/QArray.cs">IQArray</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>&gt;</td>
+        <td><span class="parametername">authSecret</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;(<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a>, <a class="xref" href="https://github.com/microsoft/qsharp-runtime/blob/main/src/Simulation/Core/QArray.cs">IQArray</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>&gt;, <a class="xref" href="https://github.com/microsoft/qsharp-runtime/blob/main/src/Simulation/Core/QArray.cs">IQArray</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>&gt;)&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="EasyQ_Quantum_Cryptography_GenerateQuantumSecureKey___DataIn___" data-uid="EasyQ.Quantum.Cryptography.GenerateQuantumSecureKey.__DataIn__*"></a>
+  <h4 id="EasyQ_Quantum_Cryptography_GenerateQuantumSecureKey___DataIn___System_ValueTuple_System_Int64_System_Int64_System_Double_Microsoft_Quantum_Simulation_Core_IQArray_System_Boolean___" data-uid="EasyQ.Quantum.Cryptography.GenerateQuantumSecureKey.__DataIn__(System.ValueTuple{System.Int64,System.Int64,System.Double,Microsoft.Quantum.Simulation.Core.IQArray{System.Boolean}})">__DataIn__((long, long, double, IQArray&lt;bool&gt;))</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override IApplyData __DataIn__((long, long, double, IQArray&lt;bool&gt;) data)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>(<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int64">long</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int64">long</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a>, <a class="xref" href="https://github.com/microsoft/qsharp-runtime/blob/main/src/Simulation/Core/QArray.cs">IQArray</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>&gt;)</td>
+        <td><span class="parametername">data</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://github.com/microsoft/qsharp-runtime/blob/main/src/Simulation/Core/IData.cs">IApplyData</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="https://github.com/microsoft/qsharp-runtime/blob/main/src/Simulation/Core/Operations/Operation.cs">Operation&lt;(long, long, double, IQArray&lt;bool&gt;), (bool, double, double, IQArray&lt;bool&gt;, IQArray&lt;bool&gt;)&gt;.__DataIn__((long, long, double, IQArray&lt;bool&gt;))</a></div>
+  <a id="EasyQ_Quantum_Cryptography_GenerateQuantumSecureKey___DataOut___" data-uid="EasyQ.Quantum.Cryptography.GenerateQuantumSecureKey.__DataOut__*"></a>
+  <h4 id="EasyQ_Quantum_Cryptography_GenerateQuantumSecureKey___DataOut___System_ValueTuple_System_Boolean_System_Double_System_Double_Microsoft_Quantum_Simulation_Core_IQArray_System_Boolean__Microsoft_Quantum_Simulation_Core_IQArray_System_Boolean___" data-uid="EasyQ.Quantum.Cryptography.GenerateQuantumSecureKey.__DataOut__(System.ValueTuple{System.Boolean,System.Double,System.Double,Microsoft.Quantum.Simulation.Core.IQArray{System.Boolean},Microsoft.Quantum.Simulation.Core.IQArray{System.Boolean}})">__DataOut__((bool, double, double, IQArray&lt;bool&gt;, IQArray&lt;bool&gt;))</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override IApplyData __DataOut__((bool, double, double, IQArray&lt;bool&gt;, IQArray&lt;bool&gt;) data)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>(<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a>, <a class="xref" href="https://github.com/microsoft/qsharp-runtime/blob/main/src/Simulation/Core/QArray.cs">IQArray</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>&gt;, <a class="xref" href="https://github.com/microsoft/qsharp-runtime/blob/main/src/Simulation/Core/QArray.cs">IQArray</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>&gt;)</td>
+        <td><span class="parametername">data</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://github.com/microsoft/qsharp-runtime/blob/main/src/Simulation/Core/IData.cs">IApplyData</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="https://github.com/microsoft/qsharp-runtime/blob/main/src/Simulation/Core/Operations/Operation.cs">Operation&lt;(long, long, double, IQArray&lt;bool&gt;), (bool, double, double, IQArray&lt;bool&gt;, IQArray&lt;bool&gt;)&gt;.__DataOut__((bool, double, double, IQArray&lt;bool&gt;, IQArray&lt;bool&gt;))</a></div>
+  <a id="EasyQ_Quantum_Cryptography_GenerateQuantumSecureKey___Init___" data-uid="EasyQ.Quantum.Cryptography.GenerateQuantumSecureKey.__Init__*"></a>
+  <h4 id="EasyQ_Quantum_Cryptography_GenerateQuantumSecureKey___Init__" data-uid="EasyQ.Quantum.Cryptography.GenerateQuantumSecureKey.__Init__">__Init__()</h4>
+  <div class="markdown level1 summary"><p>This method is called once, to let the Operation initialize and verify its dependencies.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override void __Init__()</code></pre>
+  </div>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="https://github.com/microsoft/qsharp-runtime/blob/main/src/Simulation/Core/AbstractCallable.cs">AbstractCallable.__Init__()</a></div>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <a class="xref" href="https://github.com/microsoft/qsharp-runtime/blob/main/src/Simulation/Core/Operations/Operation.cs">ICallable&lt;I, O&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="https://github.com/microsoft/qsharp-runtime/blob/main/src/Simulation/Core/Generics/GenericCallable.cs">ICallable</a>
+  </div>
+  <div>
+      <a class="xref" href="https://github.com/microsoft/qsharp-runtime/blob/main/src/Simulation/Core/IData.cs">IApplyData</a>
+  </div>
+
+</article>
+          </div>
+        </div>
+      </div>
+
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+      
+      <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <script type="text/javascript" src="../../styles/docfx.vendor.min.js"></script>
+    <script type="text/javascript" src="../../styles/docfx.js"></script>
+    <script type="text/javascript" src="../../styles/main.js"></script>
+  </body>
+</html>

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+
+  <head>
+    <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+      <title>EasyQ </title>
+      <meta name="viewport" content="width=device-width">
+      <meta name="title" content="EasyQ ">
+    
+    
+      <link rel="shortcut icon" href="favicon.ico">
+      <link rel="stylesheet" href="styles/docfx.vendor.min.css">
+      <link rel="stylesheet" href="styles/docfx.css">
+      <link rel="stylesheet" href="styles/main.css">
+      <meta property="docfx:navrel" content="toc.html">
+      <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+
+              <a class="navbar-brand" href="index.html">
+                <img id="logo" class="svg" src="logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+
+        <div id="search-results">
+          <div class="search-list">Search Results for <span></span></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination" data-first=First data-prev=Previous data-next=Next data-last=Last></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        <div class="article row grid">
+          <div class="col-md-12">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="easyq">EasyQ</h1>
+
+<p>EasyQ is a quantum computing framework designed to make quantum algorithms accessible to regular developers, without requiring specialized knowledge of quantum mechanics or quantum computing principles.</p>
+<h2 id="project-overview">Project Overview</h2>
+<p>The core philosophy of EasyQ is to provide a developer-friendly API that abstracts away the complexity of quantum operations, allowing regular software engineers to leverage quantum algorithms in their applications. All operations use pure quantum logic with no classical fallbacks.</p>
+<p>EasyQ currently provides:</p>
+<ul>
+<li><strong>Quantum Search</strong>: Implementation of Grover's algorithm for searching unstructured data</li>
+<li><strong>Quantum Key Distribution</strong>: E91 protocol implementation for secure communications</li>
+<li><strong>Quantum Random Number Generation</strong>: True random number generation using quantum properties</li>
+</ul>
+<h2 id="early-documentation">Early Documentation</h2>
+<p>I've set up some auto-generated docs you can check out here: <a href="https://easyq.henrikarba.eu/">EasyQ</a></p>
+<p>It's still super early, so it might be a bit rough around the edges.
+Once I get the Go and Python packages out, I'll also put together some easier-to-follow docs.</p>
+<p>Feel free to reach out if anything's confusing — I'm happy to help!</p>
+<h2 id="current-status">Current Status</h2>
+<p>EasyQ is currently in active development:</p>
+<ul>
+<li>All functionality has been tested through quantum simulation</li>
+<li>Quantum Search works correctly in simulation environments</li>
+<li>Quantum Key Distribution is implemented theoretically but hasn't been verified on actual quantum hardware, so its functionality on real quantum computers is not yet confirmed</li>
+<li>No testing has been performed on actual quantum hardware yet</li>
+<li>Primary focus is on compatibility with Microsoft's quantum computing platform, as indicated by the use of Q#</li>
+</ul>
+<h2 id="implementation">Implementation</h2>
+<p>The framework is built with two main layers:</p>
+<ol>
+<li><strong>Quantum Layer</strong> (.qs files): Core quantum operations written in Q#</li>
+<li><strong>Bridge Layer</strong> (.cs files): Developer-friendly APIs that abstract quantum complexity</li>
+</ol>
+<h2 id="requirements">Requirements</h2>
+<ul>
+<li>.NET 9.0 or higher</li>
+<li>Microsoft Quantum Development Kit</li>
+</ul>
+<h2 id="planned-features">Planned Features</h2>
+<ul>
+<li>Package distribution for easy integration</li>
+<li>Language bindings for:
+<ul>
+<li>Go</li>
+<li>Python</li>
+</ul>
+</li>
+<li>Additional quantum algorithms</li>
+</ul>
+<h2 id="using-it">Using It</h2>
+<p>Since EasyQ is not yet available as a package, you'll need to clone the repository and include it in your project</p>
+<h2 id="testing">Testing</h2>
+<p>The repository includes a test suite that demonstrates the capabilities of EasyQ:</p>
+<pre><code class="lang-bash">cd tests
+dotnet run
+</code></pre>
+<h2 id="notes">Notes</h2>
+<ul>
+<li>This framework has not been tested on real quantum hardware</li>
+<li>The code is designed to be future-proof, allowing for seamless transition to actual quantum computers when available</li>
+<li>Performance in simulation does not reflect actual performance on quantum hardware</li>
+</ul>
+
+</article>
+          </div>
+        </div>
+      </div>
+
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+      
+      <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <script type="text/javascript" src="styles/docfx.vendor.min.js"></script>
+    <script type="text/javascript" src="styles/docfx.js"></script>
+    <script type="text/javascript" src="styles/main.js"></script>
+  </body>
+</html>
