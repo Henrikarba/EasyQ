@@ -89,15 +89,25 @@ jobs:
               {
                 "files": [
                   "api/**.yml",
-                  "api/index.md"
+                  "api/**.md"
+                ]
+              },
+              {
+                "files": [
+                  "toc.yml",
+                  "*.md"
+                ]
+              },
+              {
+                "files": [
+                  "api/bridge/toc.yml",
+                  "api/quantum/toc.yml"
                 ]
               },
               {
                 "files": [
                   "articles/**.md",
-                  "articles/**/toc.yml",
-                  "toc.yml",
-                  "*.md"
+                  "articles/**/toc.yml"
                 ]
               }
             ],
@@ -143,21 +153,21 @@ jobs:
         mkdir -p docs/api/quantum
         
         cat > docs/api/bridge/toc.yml << EOF
-        - name: Bridge Layer Overview
+        - name: Overview
           href: index.md
         - name: EasyQ.Bridge.Search
-          href: EasyQ.Bridge.Search.html
+          href: EasyQ.Bridge.Search.yml
         - name: EasyQ.Bridge.Cryptography
-          href: EasyQ.Bridge.Cryptography.html
+          href: EasyQ.Bridge.Cryptography.yml
         EOF
         
         cat > docs/api/quantum/toc.yml << EOF
-        - name: Quantum Layer Overview
+        - name: Overview
           href: index.md
         - name: EasyQ.Quantum.Search
-          href: EasyQ.Quantum.Search.html
+          href: EasyQ.Quantum.Search.yml
         - name: EasyQ.Quantum.Cryptography
-          href: EasyQ.Quantum.Cryptography.html
+          href: EasyQ.Quantum.Cryptography.yml
         EOF
         
         # Create bridge index
