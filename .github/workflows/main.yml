@@ -5,6 +5,7 @@ on:
     branches: [ main ]
   workflow_dispatch:
 
+# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
   contents: write
   pages: write
@@ -44,6 +45,7 @@ jobs:
         
     - name: Configure DocFX
       run: |
+        # Create docfx.json in the docs directory
         cat > docs/docfx.json << EOF
         {
           "metadata": [
@@ -136,15 +138,65 @@ jobs:
         # Copy README.md for index
         cp README.md docs/index.md
         
-        # Create basic TOC
-        cat > docs/toc.yml << EOF
-        - name: Home
+        # Create subfolder TOCs
+        mkdir -p docs/api/bridge
+        mkdir -p docs/api/quantum
+        
+        cat > docs/api/bridge/toc.yml << EOF
+        - name: Bridge Layer Overview
           href: index.md
-        - name: API Documentation
-          href: api/
-          homepage: api/index.md
-        - name: Articles
-          href: articles/
+        - name: EasyQ.Bridge.Search
+          href: EasyQ.Bridge.Search.html
+        - name: EasyQ.Bridge.Cryptography
+          href: EasyQ.Bridge.Cryptography.html
+        EOF
+        
+        cat > docs/api/quantum/toc.yml << EOF
+        - name: Quantum Layer Overview
+          href: index.md
+        - name: EasyQ.Quantum.Search
+          href: EasyQ.Quantum.Search.html
+        - name: EasyQ.Quantum.Cryptography
+          href: EasyQ.Quantum.Cryptography.html
+        EOF
+        
+        # Create bridge index
+        cat > docs/api/bridge/index.md << EOF
+        # Developer-Friendly API Layer
+        
+        The Bridge layer provides simple, intuitive APIs that hide the complexity of quantum operations.
+        
+        ## Available APIs
+        
+        * **[Search](EasyQ.Bridge.Search.html)** - Find items in collections using quantum search algorithms
+        * **[Cryptography](EasyQ.Bridge.Cryptography.html)** - Generate secure keys and random numbers using quantum properties
+        
+        ## Usage Example
+        
+        \`\`\`csharp
+        // Example of using the quantum search API
+        using EasyQ.Bridge.Search;
+        
+        // Create a quantum search instance
+        using var searcher = new QuantumSearch();
+        
+        // Search in a collection
+        var results = await searcher.Search(collection, item => item.Property == value);
+        \`\`\`
+        EOF
+        
+        # Create quantum index
+        cat > docs/api/quantum/index.md << EOF
+        # Advanced: Quantum Implementation Layer
+        
+        > **Note:** Most developers won't need to use these APIs directly. The [Bridge Layer](../bridge/index.md) provides easier-to-use interfaces.
+        
+        The Quantum layer contains the core quantum operations implemented in Q#. These components implement the actual quantum algorithms and operations that power the EasyQ framework.
+        
+        ## Quantum Components
+        
+        * **[Search](EasyQ.Quantum.Search.html)** - Implementation of Grover's search algorithm
+        * **[Cryptography](EasyQ.Quantum.Cryptography.html)** - Quantum key distribution and random number generation
         EOF
         
         # Create API index
