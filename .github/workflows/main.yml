@@ -132,7 +132,13 @@ jobs:
             "globalMetadata": {
               "_enableSearch": true,
               "_disableContribution": true,
-              "_disableNextArticle": false
+              "_disableNewTab": true,
+              "_disableAffix": true,
+              "_disableSideFilter": false,
+              "_gitContribute": {
+                "repo": "",
+                "branch": ""
+              }
             }
           }
         }
