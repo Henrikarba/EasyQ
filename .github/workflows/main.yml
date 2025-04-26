@@ -22,12 +22,6 @@ jobs:
       run: |
         dotnet tool install -g docfx
         echo "$HOME/.dotnet/tools" >> $GITHUB_PATH
-        
-    - name: Restore dependencies
-      run: dotnet restore EasyQ.sln
-      
-    - name: Build project
-      run: dotnet build EasyQ.sln --no-restore
       
     - name: Prepare docs directory
       run: |
@@ -38,8 +32,8 @@ jobs:
         
     - name: Configure DocFX
       run: |
-        # Create docfx.json in the root directory
-        cat > docfx.json << EOF
+        # Create docfx.json in the docs directory
+        cat > docs/docfx.json << EOF
         {
           "metadata": [
             {
@@ -48,10 +42,11 @@ jobs:
                   "files": [
                     "src/Quantum/**.csproj",
                     "src/Bridge/**.csproj"
-                  ]
+                  ],
+                  "src": ".."
                 }
               ],
-              "dest": "docs/api",
+              "dest": "api",
               "disableGitFeatures": false,
               "disableDefaultFilter": false
             }
@@ -60,30 +55,30 @@ jobs:
             "content": [
               {
                 "files": [
-                  "docs/api/**.yml",
-                  "docs/api/index.md"
+                  "api/**.yml",
+                  "api/index.md"
                 ]
               },
               {
                 "files": [
-                  "docs/articles/**.md",
-                  "docs/articles/**/toc.yml",
-                  "docs/toc.yml",
-                  "docs/*.md"
+                  "articles/**.md",
+                  "articles/**/toc.yml",
+                  "toc.yml",
+                  "*.md"
                 ]
               }
             ],
             "resource": [
               {
                 "files": [
-                  "docs/images/**"
+                  "images/**"
                 ]
               }
             ],
             "overwrite": [
               {
                 "files": [
-                  "docs/apidoc/**.md"
+                  "apidoc/**.md"
                 ],
                 "exclude": [
                   "obj/**",
@@ -91,7 +86,7 @@ jobs:
                 ]
               }
             ],
-            "dest": "docs/_site",
+            "dest": "_site",
             "globalMetadataFiles": [],
             "fileMetadataFiles": [],
             "template": [
@@ -151,7 +146,7 @@ jobs:
         
         ## Examples
         
-        Check out the [examples in our test suite](https://github.com/Henrikarba/EasyQ/tree/main/tests) to see EasyQ in action.
+        Check out the [examples in our test suite](https://github.com/yourusername/EasyQ/tree/main/tests) to see EasyQ in action.
         EOF
         
         cat > docs/articles/toc.yml << EOF
@@ -161,6 +156,7 @@ jobs:
         
     - name: Generate documentation
       run: |
+        cd docs
         docfx metadata
         docfx build
       
