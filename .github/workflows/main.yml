@@ -3,7 +3,7 @@ name: Generate and Deploy Documentation
 on:
   push:
     branches: [ main ]
-  workflow_dispatch:
+  workflow_dispatch:  # Allows you to run this workflow manually from the Actions tab
 
 jobs:
   build-and-deploy:
@@ -16,12 +16,18 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: 9.0.x
+        dotnet-version: 9.0.x  # Match your project's .NET version
         
     - name: Install DocFX
       run: |
         dotnet tool install -g docfx
         echo "$HOME/.dotnet/tools" >> $GITHUB_PATH
+        
+    # We need to build the projects for DocFX to properly resolve references
+    - name: Build projects for documentation
+      run: |
+        dotnet build src/Quantum/Quantum.csproj
+        dotnet build src/Bridge/Bridge.csproj
       
     - name: Prepare docs directory
       run: |
@@ -40,13 +46,17 @@ jobs:
               "src": [
                 {
                   "files": [
-                    "src/Quantum/**.csproj",
-                    "src/Bridge/**.csproj"
+                    "src/Quantum/Quantum.csproj",
+                    "src/Bridge/Bridge.csproj"
                   ],
-                  "src": ".."
+                  "src": "..",
+                  "properties": {
+                    "TargetFramework": "net9.0"
+                  }
                 }
               ],
               "dest": "api",
+              "includePrivateMembers": false,
               "disableGitFeatures": false,
               "disableDefaultFilter": false
             }
@@ -165,4 +175,4 @@ jobs:
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_dir: ./docs/_site
-        force_orphan: true
+        force_orphan: true  # Use a single-branch approach
