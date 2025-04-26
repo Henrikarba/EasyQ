@@ -1,8 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Linq;
-
 namespace EasyQTests
 {
     // Interface for all test runners
@@ -38,8 +33,9 @@ namespace EasyQTests
         private static void RegisterTestRunners()
         {
             // Register all test runners here
-            RegisterTestRunner(new EasyQTests.Search.SearchTests());
-            RegisterTestRunner(new EasyQTests.Cryptography.KeyDistributionTests());
+            RegisterTestRunner(new Search.SearchTests());
+            RegisterTestRunner(new Cryptography.KeyDistributionTests());
+            RegisterTestRunner(new Cryptography.RngTests());
         }
         
         private static void RegisterTestRunner(ITestRunner testRunner)
