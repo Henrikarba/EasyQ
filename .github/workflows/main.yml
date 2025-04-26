@@ -160,12 +160,10 @@ jobs:
         ## Namespaces
 
         ### Bridge Layer
-        * [EasyQ.Bridge](bridge/EasyQ.Bridge.html) - Developer-friendly APIs for quantum computing
         * [EasyQ.Bridge.Search](bridge/EasyQ.Bridge.Search.html) - Search functionality using quantum algorithms
         * [EasyQ.Bridge.Cryptography](bridge/EasyQ.Bridge.Cryptography.html) - Cryptographic functionality using quantum properties
         
         ### Quantum Layer
-        * [EasyQ.Quantum](quantum/EasyQ.Quantum.html) - Core quantum operations
         * [EasyQ.Quantum.Search](quantum/EasyQ.Quantum.Search.html) - Quantum search algorithms
         * [EasyQ.Quantum.Cryptography](quantum/EasyQ.Quantum.Cryptography.html) - Quantum cryptography operations
         EOF
