@@ -24,10 +24,10 @@ jobs:
         echo "$HOME/.dotnet/tools" >> $GITHUB_PATH
         
     - name: Restore dependencies
-      run: dotnet restore
+      run: dotnet restore EasyQ.sln
       
     - name: Build project
-      run: dotnet build --no-restore
+      run: dotnet build EasyQ.sln --no-restore
       
     - name: Prepare docs directory
       run: |
