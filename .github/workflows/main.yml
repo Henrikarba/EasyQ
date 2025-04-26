@@ -13,10 +13,12 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
       
-    - name: Setup .NET
+    - name: Setup .NET versions
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: 9.0.x  # Match your project's .NET version
+        dotnet-version: |
+          6.0.x
+          9.0.x
         
     - name: Install DocFX
       run: |
@@ -26,8 +28,8 @@ jobs:
     # We need to build the projects for DocFX to properly resolve references
     - name: Build projects for documentation
       run: |
-        dotnet build src/Quantum/Quantum.csproj
-        dotnet build src/Bridge/Bridge.csproj
+        dotnet build src/Quantum/Quantum.csproj -f net6.0
+        dotnet build src/Bridge/Bridge.csproj -f net9.0
       
     - name: Prepare docs directory
       run: |
@@ -46,7 +48,23 @@ jobs:
               "src": [
                 {
                   "files": [
-                    "src/Quantum/Quantum.csproj",
+                    "src/Quantum/Quantum.csproj"
+                  ],
+                  "src": "..",
+                  "properties": {
+                    "TargetFramework": "net6.0"
+                  }
+                }
+              ],
+              "dest": "api/quantum",
+              "includePrivateMembers": false,
+              "disableGitFeatures": false,
+              "disableDefaultFilter": false
+            },
+            {
+              "src": [
+                {
+                  "files": [
                     "src/Bridge/Bridge.csproj"
                   ],
                   "src": "..",
@@ -55,7 +73,7 @@ jobs:
                   }
                 }
               ],
-              "dest": "api",
+              "dest": "api/bridge",
               "includePrivateMembers": false,
               "disableGitFeatures": false,
               "disableDefaultFilter": false
@@ -134,10 +152,15 @@ jobs:
         
         ## Namespaces
         
-        * [EasyQ.Bridge](EasyQ.Bridge.html) - Developer-friendly APIs for quantum computing
-        * [EasyQ.Bridge.Search](EasyQ.Bridge.Search.html) - Search functionality using quantum algorithms
-        * [EasyQ.Bridge.Cryptography](EasyQ.Bridge.Cryptography.html) - Cryptographic functionality using quantum properties
-        * [EasyQ.Quantum](EasyQ.Quantum.html) - Core quantum operations
+        ### Quantum Layer
+        * [EasyQ.Quantum](quantum/EasyQ.Quantum.html) - Core quantum operations
+        * [EasyQ.Quantum.Search](quantum/EasyQ.Quantum.Search.html) - Quantum search algorithms
+        * [EasyQ.Quantum.Cryptography](quantum/EasyQ.Quantum.Cryptography.html) - Quantum cryptography operations
+        
+        ### Bridge Layer
+        * [EasyQ.Bridge](bridge/EasyQ.Bridge.html) - Developer-friendly APIs for quantum computing
+        * [EasyQ.Bridge.Search](bridge/EasyQ.Bridge.Search.html) - Search functionality using quantum algorithms
+        * [EasyQ.Bridge.Cryptography](bridge/EasyQ.Bridge.Cryptography.html) - Cryptographic functionality using quantum properties
         EOF
         
         # Create basic article structure
