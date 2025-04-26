@@ -12,6 +12,15 @@ EasyQ currently provides:
 - **Quantum Key Distribution**: E91 protocol implementation for secure communications
 - **Quantum Random Number Generation**: True random number generation using quantum properties
 
+## Early Documentation
+
+I've set up some auto-generated docs you can check out here: [EasyQ](https://easyq.henrikarba.eu/)
+
+It's still super early, so it might be a bit rough around the edges.
+Once I get the Go and Python packages out, I'll also put together some easier-to-follow docs.
+
+Feel free to reach out if anything's confusing — I'm happy to help!
+
 ## Current Status
 
 EasyQ is currently in active development:
