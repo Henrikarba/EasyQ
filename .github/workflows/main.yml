@@ -20,7 +20,7 @@ jobs:
     - name: Install DocFX
       run: |
         dotnet tool install -g docfx
-        echo "::add-path::$HOME/.dotnet/tools"
+        echo "$HOME/.dotnet/tools" >> $GITHUB_PATH
         
     - name: Restore dependencies
       run: dotnet restore
@@ -35,7 +35,6 @@ jobs:
         
     - name: Configure DocFX
       run: |
-        # Update the docfx.json to include your project files
         cat > docfx_project/docfx.json << EOF
         {
           "metadata": [
