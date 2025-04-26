@@ -3,6 +3,7 @@ name: Generate and Deploy Documentation
 on:
   push:
     branches: [ main ]
+  workflow_dispatch:
 
 jobs:
   build-and-deploy:
@@ -15,7 +16,7 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: 9.0.*
+        dotnet-version: 9.0.x
         
     - name: Install DocFX
       run: |
@@ -28,14 +29,17 @@ jobs:
     - name: Build project
       run: dotnet build --no-restore
       
-    - name: Prepare DocFX
+    - name: Prepare docs directory
       run: |
-        mkdir -p docfx_project
-        docfx init -q -o docfx_project
+        mkdir -p docs
+        mkdir -p docs/api
+        mkdir -p docs/articles
+        mkdir -p docs/images
         
     - name: Configure DocFX
       run: |
-        cat > docs/docfx.json << EOF
+        # Create docfx.json in the root directory
+        cat > docfx.json << EOF
         {
           "metadata": [
             {
@@ -44,11 +48,10 @@ jobs:
                   "files": [
                     "src/Quantum/**.csproj",
                     "src/Bridge/**.csproj"
-                  ],
-                  "src": ".."
+                  ]
                 }
               ],
-              "dest": "api",
+              "dest": "docs/api",
               "disableGitFeatures": false,
               "disableDefaultFilter": false
             }
@@ -57,30 +60,30 @@ jobs:
             "content": [
               {
                 "files": [
-                  "api/**.yml",
-                  "api/index.md"
+                  "docs/api/**.yml",
+                  "docs/api/index.md"
                 ]
               },
               {
                 "files": [
-                  "articles/**.md",
-                  "articles/**/toc.yml",
-                  "toc.yml",
-                  "*.md"
+                  "docs/articles/**.md",
+                  "docs/articles/**/toc.yml",
+                  "docs/toc.yml",
+                  "docs/*.md"
                 ]
               }
             ],
             "resource": [
               {
                 "files": [
-                  "images/**"
+                  "docs/images/**"
                 ]
               }
             ],
             "overwrite": [
               {
                 "files": [
-                  "apidoc/**.md"
+                  "docs/apidoc/**.md"
                 ],
                 "exclude": [
                   "obj/**",
@@ -88,7 +91,7 @@ jobs:
                 ]
               }
             ],
-            "dest": "../docs",
+            "dest": "docs/_site",
             "globalMetadataFiles": [],
             "fileMetadataFiles": [],
             "template": [
@@ -105,10 +108,10 @@ jobs:
         EOF
         
         # Copy README.md for index
-        cp ../README.md docfx_project/index.md
+        cp README.md docs/index.md
         
         # Create basic TOC
-        cat > docfx_project/toc.yml << EOF
+        cat > docs/toc.yml << EOF
         - name: Home
           href: index.md
         - name: API Documentation
@@ -119,8 +122,7 @@ jobs:
         EOF
         
         # Create API index
-        mkdir -p docfx_project/api
-        cat > docfx_project/api/index.md << EOF
+        cat > docs/api/index.md << EOF
         # EasyQ API Documentation
         
         Welcome to the API documentation for EasyQ, a quantum computing framework for regular developers.
@@ -134,8 +136,7 @@ jobs:
         EOF
         
         # Create basic article structure
-        mkdir -p docfx_project/articles
-        cat > docfx_project/articles/intro.md << EOF
+        cat > docs/articles/intro.md << EOF
         # Introduction to EasyQ
         
         EasyQ makes quantum computing accessible to regular developers without requiring specialized knowledge of quantum mechanics or quantum computing principles.
@@ -150,17 +151,16 @@ jobs:
         
         ## Examples
         
-        Check out the [examples in our test suite](https://github.com/yourusername/EasyQ/tree/main/tests) to see EasyQ in action.
+        Check out the [examples in our test suite](https://github.com/Henrikarba/EasyQ/tree/main/tests) to see EasyQ in action.
         EOF
         
-        cat > docfx_project/articles/toc.yml << EOF
+        cat > docs/articles/toc.yml << EOF
         - name: Introduction
           href: intro.md
         EOF
         
     - name: Generate documentation
       run: |
-        cd docfx_project
         docfx metadata
         docfx build
       
@@ -168,5 +168,5 @@ jobs:
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./docs
-        force_orphan: true  # Use a single-branch approach
+        publish_dir: ./docs/_site
+        force_orphan: true
