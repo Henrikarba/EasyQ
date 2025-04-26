@@ -128,7 +128,12 @@ jobs:
             "noLangKeyword": false,
             "keepFileLink": false,
             "cleanupCacheHistory": false,
-            "disableGitFeatures": false
+            "disableGitFeatures": false,
+            "globalMetadata": {
+              "_enableSearch": true,
+              "_disableContribution": true,
+              "_disableNextArticle": false
+            }
           }
         }
         EOF
